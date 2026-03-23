@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>JRBC | Digital Curator &amp; CTO</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #000000;
+            color: #e2e2e2;
+            overflow-x: hidden
+        }
+
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuB2pqV1SYAZ0STh3b98wWqQUb4shlXlb4185hJxWzjQkN5CfoFMJOfod730n4llGHeX181skUHdRdr3eKNAYt5y5kqBseyrEPPtQ6EHdy961_m-Wb6EskYsuiFyRwmcj9tpWlgX3jpgTe9RlGfX3MdTZoFQcJF03QFJkmEXV7J4Q4avvYGfOH8vquh7qmLRVNb2eOVuK84zFTcxpg59Jf8XYuKbSxuHap39lDlBnvg6mOyR42NBeMBhsSV4wtoXNVNG2BvOINj2q04)
+        }
+
+        .text-outline {
+            -webkit-text-stroke: 1px rgba(226, 226, 226, 0.15);
+            color: transparent
+        }
+
+        .stagger-text {
+            line-height: 0.8
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000000
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #124af0
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-marquee {
+            animation: marquee 30s linear infinite;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-error": "#690005",
+                        "outline": "#8d909e",
+                        "on-primary": "#002388",
+                        "surface": "#131313",
+                        "on-error-container": "#ffdad6",
+                        "on-surface": "#e2e2e2",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "on-surface-variant": "#c3c6d5",
+                        "on-primary-container": "#aebbff",
+                        "surface-container-high": "#2a2a2a",
+                        "inverse-on-surface": "#303030",
+                        "on-background": "#e2e2e2",
+                        "background": "#131313",
+                        "tertiary-fixed": "#ffdbcf",
+                        "primary-container": "#003ace",
+                        "secondary-fixed": "#dae2ff",
+                        "on-secondary": "#1f2f54",
+                        "surface-bright": "#393939",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#8b2e01",
+                        "surface-container-low": "#1b1b1b",
+                        "surface-tint": "#b8c3ff",
+                        "primary": "#b8c3ff",
+                        "on-tertiary-fixed": "#380d00",
+                        "on-tertiary": "#5b1b00",
+                        "surface-container": "#1f1f1f",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#37466c",
+                        "surface-variant": "#353535",
+                        "inverse-primary": "#124af0",
+                        "primary-fixed": "#dde1ff",
+                        "on-tertiary-container": "#ffaa8a",
+                        "secondary": "#b6c6f3",
+                        "on-tertiary-fixed-variant": "#802900",
+                        "tertiary": "#ffb59a",
+                        "inverse-surface": "#e2e2e2",
+                        "on-primary-fixed": "#001356",
+                        "secondary-fixed-dim": "#b6c6f3",
+                        "surface-dim": "#131313",
+                        "secondary-container": "#39486e",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-primary-fixed-variant": "#0035be",
+                        "surface-container-highest": "#353535",
+                        "on-secondary-fixed": "#081a3e",
+                        "on-secondary-container": "#a8b8e4",
+                        "outline-variant": "#434653"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="selection:bg-inverse-primary selection:text-white bg-[#000000]">
+    <div class="grain-overlay"></div>
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 backdrop-blur-xl bg-black/80">
+        <div class="flex justify-between items-center px-6 md:px-12 py-6 w-full max-w-[1920px] mx-auto">
+            <div class="text-xl font-black tracking-tighter text-[#e2e2e2]">JRBC</div>
+            <div class="hidden md:flex gap-12">
+                <a class="text-[#c3c6d5] hover:text-[#e2e2e2] transition-colors font-['Inter'] font-bold tracking-tighter uppercase text-sm"
+                    href="#experience">EXPERIENCE</a>
+                <a class="text-[#c3c6d5] hover:text-[#e2e2e2] transition-colors font-['Inter'] font-bold tracking-tighter uppercase text-sm"
+                    href="#work">WORK</a>
+                <a class="text-[#c3c6d5] hover:text-[#e2e2e2] transition-colors font-['Inter'] font-bold tracking-tighter uppercase text-sm"
+                    href="#certifications">CERTIFICATIONS</a>
+                <a class="text-[#c3c6d5] hover:text-[#e2e2e2] transition-colors font-['Inter'] font-bold tracking-tighter uppercase text-sm"
+                    href="#gallery">GALLERY</a>
+            </div>
+            <a class="bg-primary-container text-on-primary-container px-6 py-2 font-bold tracking-tighter uppercase text-sm hover:bg-inverse-primary transition-all duration-300"
+                href="#">
+                SCHEDULE A CALL
+            </a>
+        </div>
+    </nav>
+    <!-- SideNavBar -->
+    <aside
+        class="fixed left-0 top-0 h-full w-20 bg-[#0e0e0e] border-r border-[#434653]/15 hidden lg:flex flex-col items-center py-8 z-40">
+        <div class="mb-12">
+            <span class="text-lg font-bold text-[#e2e2e2]">JRBC</span>
+        </div>
+        <div class="flex flex-col gap-12 flex-grow justify-center">
+            <div
+                class="group flex flex-col items-center gap-2 cursor-pointer transition-all duration-500 text-[#8d909e] hover:text-[#124af0]">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">location_on</span>
+                <span
+                    class="font-['Inter'] uppercase tracking-[0.1rem] text-[8px] rotate-180 [writing-mode:vertical-lr]">METRO
+                    MANILA</span>
+            </div>
+            <div
+                class="group flex flex-col items-center gap-2 cursor-pointer transition-all duration-500 text-[#8d909e] hover:text-[#124af0]">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">emoji_events</span>
+                <span
+                    class="font-['Inter'] uppercase tracking-[0.1rem] text-[8px] rotate-180 [writing-mode:vertical-lr]">DEV
+                    CAMP FINALIST</span>
+            </div>
+            <div
+                class="group flex flex-col items-center gap-2 cursor-pointer transition-all duration-500 text-[#124af0] border-r-2 border-[#124af0]">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">terminal</span>
+                <span
+                    class="font-['Inter'] uppercase tracking-[0.1rem] text-[8px] rotate-180 [writing-mode:vertical-lr]">CTO
+                    @ SEEGLA</span>
+            </div>
+        </div>
+        <div class="mt-auto">
+            <div
+                class="w-10 h-10 bg-surface-container-high border border-outline-variant/20 flex items-center justify-center overflow-hidden">
+                <img alt="John Rey Bisnar Calipes 3D Character Avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvT3qVrI4SbRvE9nwF3HqwvbjR6gQ5uDQpjGQ9Ejcx_TKsW4AeSsgqKqIPJKQfVTK9VZK1FinBYLQ8DMQAHY7rDt6zcxTJ-W4bRnAVdzKPCeW3eIoePqVr1kK_-tKTC3_PRA-kJy3-gGNDb5SVw6YlOCEn_pQXLMK76I3KrL9dltGbmqfSuw-buDf3SlLEpVsQOXhm6Mm4lcmgTCpGgtJ1V8FsvYp_pua2ujX0IHeNiA-4IaDeGmF1wAlsi-xhgzBX0XCQg2yqT9Q" />
+            </div>
+        </div>
+    </aside>
+    <main class="lg:pl-20">
+        <!-- Hero Section -->
+        <section class="relative min-h-[1024px] flex items-center pt-32 pb-24 px-6 md:px-12 overflow-hidden">
+            <!-- Background Typography Layer -->
+            <div
+                class="absolute inset-0 z-0 flex flex-col justify-center items-center pointer-events-none opacity-40 overflow-hidden">
+                <div
+                    class="text-[18vw] font-black leading-[0.8] tracking-tighter text-outline select-none whitespace-nowrap -ml-[20%]">
+                    JOHN REY</div>
+                <div
+                    class="text-[18vw] font-black leading-[0.8] tracking-tighter text-outline select-none whitespace-nowrap -mr-[10%]">
+                    BISNAR</div>
+                <div
+                    class="text-[18vw] font-black leading-[0.8] tracking-tighter text-outline select-none whitespace-nowrap -ml-[30%]">
+                    CALIPES</div>
+            </div>
+            <div class="grid md:grid-cols-2 w-full max-w-7xl mx-auto items-center relative">
+                <!-- Content Layer (Above BG Text, Below Mascot in Z-space terms but layout flow handles it) -->
+                <div class="order-2 md:order-1 flex flex-col gap-8 relative z-20">
+                    <div class="flex flex-wrap gap-4">
+                        <span
+                            class="px-3 py-1 border border-outline-variant/30 text-[10px] tracking-widest font-bold text-on-surface-variant uppercase bg-surface-container/50 backdrop-blur-sm">Metro
+                            Manila, Philippines</span>
+                        <span
+                            class="px-3 py-1 border border-outline-variant/30 text-[10px] tracking-widest font-bold text-on-surface-variant uppercase bg-surface-container/50 backdrop-blur-sm">Developer
+                            Camp Manila 2026 Finalist</span>
+                        <span
+                            class="px-3 py-1 border border-outline-variant/30 text-[10px] tracking-widest font-bold text-on-surface-variant uppercase bg-surface-container/50 backdrop-blur-sm">CO-FOUNDER
+                            / CTO @ SEEGLA</span>
+                    </div>
+                    <h1
+                        class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter uppercase leading-[0.85] drop-shadow-2xl">
+                        <span class="block text-on-surface">DIGITAL</span>
+                        <span class="block text-inverse-primary">CURATOR</span>
+                    </h1>
+                    <p
+                        class="text-xl md:text-2xl font-light text-on-surface-variant max-w-lg leading-relaxed bg-black/40 backdrop-blur-md p-2 -ml-2 inline-block">
+                        AI \ Full-Stack Software Engineer \ CTO
+                    </p>
+                    <div class="flex items-center gap-12 mt-4">
+                        <a class="bg-primary-container text-on-primary-container px-10 py-5 font-black text-lg tracking-tighter uppercase hover:bg-inverse-primary transition-all duration-300 transform hover:scale-105"
+                            href="#">
+                            SCHEDULE A CALL
+                        </a>
+                        <a class="group flex items-center gap-3 font-bold text-sm tracking-widest uppercase hover:text-inverse-primary transition-colors"
+                            href="#">
+                            Read my blog
+                            <span
+                                class="material-symbols-outlined transform group-hover:translate-x-2 transition-transform">arrow_right_alt</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- Mascot Layer (Overlaying everything) -->
+                <div
+                    class="order-1 md:order-2 flex justify-center md:justify-end mb-12 md:mb-0 relative z-30 pointer-events-none">
+                    <div class="relative w-[110%] md:w-[130%] aspect-[4/5] -mt-20 md:-mr-32">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-tr from-inverse-primary/30 to-transparent blur-[120px] opacity-60">
+                        </div>
+                        <img alt="Mascot character making peace signs"
+                            class="w-full h-full object-contain relative z-10 filter drop-shadow-[0_0_100px_rgba(18,74,240,0.5)] transform scale-110"
+                            src="https://lh3.googleusercontent.com/aida/ADBb0uj5FiVWitmDCuSAyH-2kct4abqi9dTOBXhrl9kS_gqo2AFmSBaAaDjlVOdYpBmLtShOhZn8oHVvustv4QNnZgbMlLJ3kvoCYk707OcNY6z5fl7wqHZLHFakt_on3r6jmS0DonZHAZTRXfTJVDJrpUUF1S04migOubPDTX4XY0Q4rxzQe-vUsd7lEnH3QhzbwL2pFgJvfxe8-n_Xj97w7FmMFWgC1v0bMOgxh3fu2-Xz7sZZTLl6Lw3GjnAEOk_X4l-4JsYSML1Xaw"
+                            style="mix-blend-mode: lighten; filter: drop-shadow(0 0 100px rgba(18,74,240,0.6)) contrast(1.15);" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- About Section -->
+        <section class="py-32 px-6 md:px-12 bg-[#000000]">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-center">
+                <div class="md:w-1/2 flex items-center justify-center relative order-last md:order-first">
+                    <div class="relative w-full max-w-md">
+                        <div class="absolute inset-0 bg-inverse-primary/10 blur-[100px] rounded-full"></div>
+                        <img alt="Mascot working on a laptop"
+                            class="w-full h-auto relative z-10 filter drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                            src="https://lh3.googleusercontent.com/aida/ADBb0ujFk7lhRmBLCMJFT5LuEZBMATl_XMsla4165XKVTu8l7gybHeWZd8uqsWt0bvcQ68V0UwjIbbArvStuOtTJDUPMUi9Ts2L8RtZjTRZ0gi8v3NhSprCdHgbAk9MFyoHsuFfR3axqrJwX6ClN5Uu-eIVNC1Skpn1FljDrQNgLSU2nWm4NKE9cZdaGP5e27HKOnKVJ1kZLLtw4ulGdGvbV6I-3igequwLfmM_t4ZGJOYclHWAeQdNYkfIxzs97UHbpqo3V6frLqAuzyQ"
+                            style="mix-blend-mode: lighten; filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8)) contrast(1.1);" />
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-label-sm text-outline-variant tracking-[0.4em] uppercase mb-12">// THE ARCHITECT
+                    </h2>
+                    <p class="text-3xl md:text-4xl font-light leading-[1.6] text-on-surface">
+                        I'm a <span class="text-white font-bold">full-stack software engineer</span> specializing in
+                        JavaScript, Python, and AI integration. As the <span
+                            class="text-inverse-primary font-black italic">CTO of SEEGLA</span>, I focus on building
+                        intelligent solutions that bridge the gap between complex backend systems and intuitive user
+                        experiences.
+                    </p>
+                    <p class="text-lg text-on-surface-variant mt-12 leading-relaxed max-w-xl">
+                        From leading vet clinic system developments to competing in Manila's top developer camps, I am
+                        dedicated to scaling technology that matters. Every line of code is a brushstroke in the digital
+                        gallery.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Experience Section -->
+        <section class="py-32 px-6 md:px-12 bg-[#000000]" id="experience">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-label-sm text-outline-variant tracking-[0.4em] uppercase mb-20">// CHRONOLOGY</h2>
+                <div class="flex flex-col">
+                    <div
+                        class="group border-t border-outline-variant/10 py-12 flex flex-col md:flex-row md:items-end justify-between hover:bg-surface-container-low transition-colors px-4">
+                        <div class="flex flex-col gap-2">
+                            <span class="text-outline-variant font-bold text-sm tracking-widest uppercase">2026 /
+                                CURRENT</span>
+                            <h3
+                                class="text-5xl md:text-7xl font-black text-on-surface uppercase tracking-tighter group-hover:text-inverse-primary transition-colors">
+                                CTO – SEEGLA</h3>
+                        </div>
+                        <span class="text-outline-variant text-sm font-light mt-4 md:mt-0">CORE ARCHITECTURE &amp;
+                            STRATEGY</span>
+                    </div>
+                    <div
+                        class="group border-t border-outline-variant/10 py-12 flex flex-col md:flex-row md:items-end justify-between hover:bg-surface-container-low transition-colors px-4">
+                        <div class="flex flex-col gap-2">
+                            <span class="text-outline-variant font-bold text-sm tracking-widest uppercase">2026</span>
+                            <h3
+                                class="text-5xl md:text-7xl font-black text-on-surface uppercase tracking-tighter group-hover:text-inverse-primary transition-colors">
+                                PROJECT LEAD – PAWS VET</h3>
+                        </div>
+                        <span class="text-outline-variant text-sm font-light mt-4 md:mt-0">SYSTEMS DEVELOPMENT</span>
+                    </div>
+                    <div
+                        class="group border-t border-outline-variant/10 py-12 flex flex-col md:flex-row md:items-end justify-between hover:bg-surface-container-low transition-colors px-4">
+                        <div class="flex flex-col gap-2">
+                            <span class="text-outline-variant font-bold text-sm tracking-widest uppercase">2024</span>
+                            <h3
+                                class="text-5xl md:text-7xl font-black text-on-surface uppercase tracking-tighter group-hover:text-inverse-primary transition-colors">
+                                LEAD DEVELOPER – ACADEMIC</h3>
+                        </div>
+                        <span class="text-outline-variant text-sm font-light mt-4 md:mt-0">2ND YEAR TERM LEAD</span>
+                    </div>
+                    <div
+                        class="group border-t border-b border-outline-variant/10 py-12 flex flex-col md:flex-row md:items-end justify-between hover:bg-surface-container-low transition-colors px-4">
+                        <div class="flex flex-col gap-2">
+                            <span class="text-outline-variant font-bold text-sm tracking-widest uppercase">2023</span>
+                            <h3
+                                class="text-5xl md:text-7xl font-black text-on-surface uppercase tracking-tighter group-hover:text-inverse-primary transition-colors">
+                                PROJECT LEAD – FOUNDATION</h3>
+                        </div>
+                        <span class="text-outline-variant text-sm font-light mt-4 md:mt-0">1ST YEAR TERM LEAD</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Tech & Projects -->
+        <section class="py-32 px-6 md:px-12 bg-[#000000]" id="work">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-4 flex flex-col gap-12">
+                    <h2 class="text-label-sm text-outline-variant tracking-[0.4em] uppercase">// ARSENAL</h2>
+                    <div class="flex flex-col gap-8">
+                        <div>
+                            <span class="text-[10px] text-outline-variant tracking-widest block mb-4 uppercase">Frontend
+                                / Interface</span>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="px-4 py-2 bg-surface-container-high text-xs font-bold border border-outline-variant/10">JS
+                                    (ES6+)</span>
+                                <span
+                                    class="px-4 py-2 bg-surface-container-high text-xs font-bold border border-outline-variant/10">REACT</span>
+                                <span class="px-4 py-2 bg-inverse-primary text-white text-xs font-bold">NEXT.JS</span>
+                                <span
+                                    class="px-4 py-2 bg-surface-container-high text-xs font-bold border border-outline-variant/10">VUE</span>
+                                <span
+                                    class="px-4 py-2 bg-surface-container-high text-xs font-bold border border-outline-variant/10">TAILWIND</span>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-outline-variant tracking-widest block mb-4 uppercase">Backend
+                                / Intelligent</span>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="px-4 py-2 bg-surface-container-high text-xs font-bold border border-outline-variant/10">NODE.JS</span>
+                                <span
+                                    class="px-4 py-2 bg-surface-container-high text-xs font-bold border border-outline-variant/10">PYTHON</span>
+                                <span class="px-4 py-2 bg-inverse-primary text-white text-xs font-bold">FAST API</span>
+                                <span
+                                    class="px-4 py-2 bg-surface-container-high text-xs font-bold border border-outline-variant/10">AI
+                                    INTEGRATION</span>
+                            </div>
+                        </div>
+                        <div>
+                            <span
+                                class="text-[10px] text-outline-variant tracking-widest block mb-4 uppercase">Infrastructure</span>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="px-4 py-2 bg-surface-container-high text-xs font-bold border border-outline-variant/10">AWS</span>
+                                <span
+                                    class="px-4 py-2 bg-surface-container-high text-xs font-bold border border-outline-variant/10">DOCKER</span>
+                                <span
+                                    class="px-4 py-2 bg-surface-container-high text-xs font-bold border border-outline-variant/10">K8S</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-8">
+                    <h2 class="text-label-sm text-outline-variant tracking-[0.4em] uppercase mb-12 lg:text-right">//
+                        CASE STUDIES</h2>
+                    <div class="grid gap-px bg-outline-variant/20">
+                        <div class="group relative aspect-[16/9] bg-surface-container-lowest overflow-hidden">
+                            <img alt="ThriftUp Platform UI Concept"
+                                class="w-full h-full object-cover opacity-40 group-hover:scale-105 group-hover:opacity-60 transition-all duration-700"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaCbyQ81qIoDnsraijVEImHXf7CgULGXVDy58U29FEaf_gUUVfoy552JNBD7E2PK43mazCxBiJj4VC9UT61RbK-hTZWM3PvSg2ePMqcpO8yoUsqtoCDA1dRu_8omQPrg8CD2Ul6I70lvALsWdX2gaPY5AlJIb3DYSGnme7aevsWS822PmjyIvsqugNqDeO6SO-G6sr-V6c26VBaTfN2_oZ3x6H6hPiCG9vPd50NS3CC-oO69OTyWj-MLYOd_1AIAHtUzhed_Zucfo" />
+                            <div
+                                class="absolute inset-0 flex flex-col justify-end p-12 bg-gradient-to-t from-surface to-transparent">
+                                <span class="text-inverse-primary font-black tracking-widest text-xs mb-2 uppercase">01
+                                    / E-COMMERCE</span>
+                                <h3 class="text-5xl font-black text-on-surface uppercase tracking-tighter">THRIFTUP</h3>
+                            </div>
+                        </div>
+                        <div class="group relative aspect-[16/9] bg-surface-container-lowest overflow-hidden">
+                            <img alt="PawsVetClinic Dashboard system"
+                                class="w-full h-full object-cover opacity-40 group-hover:scale-105 group-hover:opacity-60 transition-all duration-700"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPhcAq4h9LQA7_7gnbqz2KUvKvI0CuAHo18wk2V3KW84Nj-poRL4VTswb1MtBb-FKZ6iDfVMuj6f5xkCyewyWvpBqwXHHpAzjRSS-7peP2sJOcAwSGM8hC554m2u0wwfpMR9Z3MlLT2u8JXL4sPi2wRTwm_fftCUDPusSJ8g77UfjDFu0Waw5I9nZ2zmUPCFnQpDL4L4PpC6f2Bbv8osefNoAo5rFpM9R1HH7luHLqpnwHynsMOpXBnJbKXgi6kR8zhc7qYTp0V7c" />
+                            <div
+                                class="absolute inset-0 flex flex-col justify-end p-12 bg-gradient-to-t from-surface to-transparent">
+                                <span class="text-inverse-primary font-black tracking-widest text-xs mb-2 uppercase">02
+                                    / HEALTHCARE</span>
+                                <h3 class="text-5xl font-black text-on-surface uppercase tracking-tighter">PAWSVETCLINIC
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="group relative aspect-[16/9] bg-surface-container-lowest overflow-hidden">
+                            <img alt="Smart Building IoT Visualization"
+                                class="w-full h-full object-cover opacity-40 group-hover:scale-105 group-hover:opacity-60 transition-all duration-700"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiNiYVP45I7ItuAnnkOb-0Hv47p7kCnw1MlhLnrcHSdxL-8mkForuGn27M_1L7g9mMz5Ak_Q9Q7-f5IfOXd0pEzjw4zn2BsfnZl33q3OoAlRl1S8piRIJ4ygyzqqT_oY82binaA_IUoIJOpgadT5jmbqV91Wno12GQT8-CLLk8C8Kmxjj44sCDJ4cvbi7Pmz4B7aiFdANXFFFmfZfBp7AbWQo_klsx-Z2KfUHgX2lj6QqlEL4Ry0QRhSYlma_pSl95vx53v-ozJcE" />
+                            <div
+                                class="absolute inset-0 flex flex-col justify-end p-12 bg-gradient-to-t from-surface to-transparent">
+                                <span class="text-inverse-primary font-black tracking-widest text-xs mb-2 uppercase">03
+                                    / IOT</span>
+                                <h3 class="text-5xl font-black text-on-surface uppercase tracking-tighter">SMART
+                                    BUILDING</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Certifications -->
+        <section class="py-20 border-y border-outline-variant/10 overflow-hidden" id="certifications">
+            <div class="flex whitespace-nowrap animate-marquee">
+                <div class="flex gap-20 items-center px-10">
+                    <span class="text-4xl md:text-6xl font-black text-outline uppercase">Huawei Developer Expert</span>
+                    <span class="material-symbols-outlined text-inverse-primary">verified</span>
+                    <span class="text-4xl md:text-6xl font-black text-outline uppercase">Google Gen AI Leader</span>
+                    <span class="material-symbols-outlined text-inverse-primary">verified</span>
+                    <span class="text-4xl md:text-6xl font-black text-outline uppercase">Oracle Gen AI
+                        Professional</span>
+                    <span class="material-symbols-outlined text-inverse-primary">verified</span>
+                    <span class="text-4xl md:text-6xl font-black text-outline uppercase">AAP / PSIA</span>
+                </div>
+                <!-- Repeat for seamless scroll -->
+                <div class="flex gap-20 items-center px-10">
+                    <span class="text-4xl md:text-6xl font-black text-outline uppercase">Huawei Developer Expert</span>
+                    <span class="material-symbols-outlined text-inverse-primary">verified</span>
+                    <span class="text-4xl md:text-6xl font-black text-outline uppercase">Google Gen AI Leader</span>
+                    <span class="material-symbols-outlined text-inverse-primary">verified</span>
+                    <span class="text-4xl md:text-6xl font-black text-outline uppercase">Oracle Gen AI
+                        Professional</span>
+                    <span class="material-symbols-outlined text-inverse-primary">verified</span>
+                    <span class="text-4xl md:text-6xl font-black text-outline uppercase">AAP / PSIA</span>
+                </div>
+            </div>
+        </section>
+        <!-- Gallery Section -->
+        <section class="py-32 px-6 md:px-12 bg-[#000000]" id="gallery">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-label-sm text-outline-variant tracking-[0.4em] uppercase mb-20 text-center">// FIELD
+                    NOTES</h2>
+                <div class="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
+                    <div class="relative overflow-hidden group">
+                        <img alt="Pitching at Developer Camp Manila 2026"
+                            class="w-full h-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUtMANzbeFebz2yph_qtwqUt9YBjDrE-IDZfAs5U_NZYYZZEEUBxdJNZAdYwXlGhdnb5N3nEzUPWCaumO-z9OQT0JkNYXlFyFxYA-7Ol5h1QKodBK22eRirCapb3CsGXsJpcheoqfm8ypZGxdT7U1n0P6gZYcJmr0KcD63sqKZV_hg0MFjEMqM7u5kTMBKcxH1PAYopoCvVyN7UJznEpL9ItTynF6WrVc6teo49sDNuhCBqlPwHG5B9IG3Fv8I-KjHq47t7sDkHoc" />
+                        <div class="pt-4 border-t border-outline-variant/10 mt-2">
+                            <span class="text-[10px] text-outline-variant tracking-widest uppercase font-bold">DEV CAMP
+                                2026 / PITCHING</span>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden group">
+                        <img alt="SEEGLA Team brainstorming session"
+                            class="w-full h-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAooArnmJ7afwHP_8poLnsK9C5K4JxUD13sDsGNB58ivNTmGqxKSmPoar8LhRdPujG0K9UUJDDNoa-_WCJs7258Pjp60rQ-cbGxd-0Wg9atMt1GeUtYg5gWvvApHC8ea3VPv5nCA43bZ7d0PaoslNaLhbvWnwJwpY4CXOzkCOoBy68fugKygUqqnMzvSIH__2aXhvpBbhqhqAkOeY4Lxbvi-YkSmLZv5atjopBiYGrSGKUJMzy2rZ8kswVK-nDn5ThzIppsqREs4zo" />
+                        <div class="pt-4 border-t border-outline-variant/10 mt-2">
+                            <span class="text-[10px] text-outline-variant tracking-widest uppercase font-bold">SEEGLA /
+                                STRATEGY SESSION</span>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden group">
+                        <img alt="Arduino hardware wiring and electronics"
+                            class="w-full h-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZkySrtqLQniYP_fJcptbeF1o6tjLz-2iPDgCUB5Feog3_zJE6jB6vxnF6LXEU-8EKzN7j8D7s1hNST-Jr0XTsPVQ4Oz7eX5DvzX-rlUwQ-kVpFBQKymHAa1gRfvsjFF2CVZXCGs8wQZJUkxfTQmh4byqTVFmNoXO55IeqoEFfRxxeOVWJ89GrO_OZzxZTY76oN4G19_P7vogEhh2fGajqcRmzRGNRKzgK-reW7iSreYdgOAHDOLHm0CRU6ynE3q3WiHuD-83lBdM" />
+                        <div class="pt-4 border-t border-outline-variant/10 mt-2">
+                            <span class="text-[10px] text-outline-variant tracking-widest uppercase font-bold">HARDWARE
+                                / IOT PROTOTYPING</span>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden group">
+                        <img alt="Community Tech Meetup Manila"
+                            class="w-full h-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBCrwnywhImpYAFyYX4iYJEq7jsDFTwke4jY6i-hEpscsDHg41cYmawHZE3GXxmF6VRbrcsN8LryLtROXSkqVTp0VBvFbEzXILQbjEpF5hugbqBJRx5K706NKYWS6GrI7RDrPQu7eVtSv-BL0-sbrL7lH6IoRpWb3kymut5NoRE7r5yoAws2kMxTqEXj9JZOEidOWWhsITavoBpLVSdbNG9zYKDe-_VXNB0OhpcDVqquRjMrIlt2WzLL98kBGafJDUAJ6hERfOlZA" />
+                        <div class="pt-4 border-t border-outline-variant/10 mt-2">
+                            <span class="text-[10px] text-outline-variant tracking-widest uppercase font-bold">COMMUNITY
+                                / TECH MEETUP</span>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden group">
+                        <img alt="PawsVetClinic Dashboard Interface"
+                            class="w-full h-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBi2obDnVbfsCiqA_wyCthnd5ViTqg6s3m0Hw75kW8S7V6nb6sG9mQTyBNvY44DMm823ns4R0iOKx9ztFXKCe6hiyc083U91Oxr2R-zX-uJfHRMPng3aoTOVofhjlvYMhN3dJpDY_n9X1cd2srOU2MR-U_jZwGE7wVPufDBja_Ik5_3cIowNa7n-UCwWDPjIhTTzCatuan7fsxTXKWUxGUxwSpt0N8AuvIxRRnos-0thOEL67tAgZ7__W8z1Iv1HWk9vy5CuY8-vcQ" />
+                        <div class="pt-4 border-t border-outline-variant/10 mt-2">
+                            <span class="text-[10px] text-outline-variant tracking-widest uppercase font-bold">PAWSVET /
+                                INTERFACE DESIGN</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer -->
+        <footer class="bg-[#0e0e0e] border-t border-[#434653]/15">
+            <div
+                class="flex flex-col md:flex-row justify-between items-center px-12 py-10 w-full gap-6 max-w-[1920px] mx-auto">
+                <div
+                    class="text-[#8d909e] font-['Inter'] uppercase tracking-widest text-[11px] font-medium text-center md:text-left">
+                    © 2024 JOHN REY BISNAR CALIPES. ALL RIGHTS RESERVED.
+                </div>
+                <div class="flex gap-10">
+                    <a class="text-[#8d909e] hover:text-[#124af0] transition-colors font-['Inter'] uppercase tracking-widest text-[11px] font-medium opacity-80 hover:opacity-100 duration-300"
+                        href="#">X</a>
+                    <a class="text-[#8d909e] hover:text-[#124af0] transition-colors font-['Inter'] uppercase tracking-widest text-[11px] font-medium opacity-80 hover:opacity-100 duration-300"
+                        href="#">LINKEDIN</a>
+                    <a class="text-[#8d909e] hover:text-[#124af0] transition-colors font-['Inter'] uppercase tracking-widest text-[11px] font-medium opacity-80 hover:opacity-100 duration-300"
+                        href="#">GITHUB</a>
+                    <a class="text-[#8d909e] hover:text-[#124af0] transition-colors font-['Inter'] uppercase tracking-widest text-[11px] font-medium opacity-80 hover:opacity-100 duration-300"
+                        href="#">READ MY BLOG</a>
+                </div>
+                <div class="text-[#e2e2e2] text-xl font-black tracking-tighter">JRBC</div>
+            </div>
+        </footer>
+    </main>
+    <!-- Bottom Navigation for Mobile -->
+    <nav
+        class="md:hidden fixed bottom-0 left-0 w-full bg-[#131313]/90 backdrop-blur-xl z-50 border-t border-outline-variant/10 bg-black/80">
+        <div class="flex justify-around items-center py-4">
+            <a class="flex flex-col items-center text-[#8d909e] hover:text-[#124af0]" href="#experience">
+                <span class="material-symbols-outlined">timeline</span>
+                <span class="text-[8px] uppercase tracking-widest font-bold mt-1">Exp</span>
+            </a>
+            <a class="flex flex-col items-center text-[#8d909e] hover:text-[#124af0]" href="#work">
+                <span class="material-symbols-outlined">terminal</span>
+                <span class="text-[8px] uppercase tracking-widest font-bold mt-1">Work</span>
+            </a>
+            <a class="flex flex-col items-center text-[#8d909e] hover:text-[#124af0]" href="#gallery">
+                <span class="material-symbols-outlined">collections</span>
+                <span class="text-[8px] uppercase tracking-widest font-bold mt-1">Life</span>
+            </a>
+            <a class="flex flex-col items-center text-[#124af0]" href="#">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+                <span class="text-[8px] uppercase tracking-widest font-bold mt-1">Call</span>
+            </a>
+        </div>
+    </nav>
+</body>
+
+</html>

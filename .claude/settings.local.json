@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:stitch.withgoogle.com)",
+      "Bash(npm install:*)",
+      "Bash(mkdir -p \"C:/Users/QCU/Downloads/devyaji-portfolio/portfolio/public/portfolio\")",
+      "Bash(curl -sL \"https://lh3.googleusercontent.com/aida-public/AB6AXuB2pqV1SYAZ0STh3b98wWqQUb4shlXlb4185hJxWzjQkN5CfoFMJOfod730n4llGHeX181skUHdRdr3eKNAYt5y5kqBseyrEPPtQ6EHdy961_m-Wb6EskYsuiFyRwmcj9tpWlgX3jpgTe9RlGfX3MdTZoFQcJF03QFJkmEXV7J4Q4avvYGfOH8vquh7qmLRVNb2eOVuK84zFTcxpg59Jf8XYuKbSxuHap39lDlBnvg6mOyR42NBeMBhsSV4wtoXNVNG2BvOINj2q04\" -o grain.png)",
+      "Bash(curl -sL \"https://lh3.googleusercontent.com/aida-public/AB6AXuDvT3qVrI4SbRvE9nwF3HqwvbjR6gQ5uDQpjGQ9Ejcx_TKsW4AeSsgqKqIPJKQfVTK9VZK1FinBYLQ8DMQAHY7rDt6zcxTJ-W4bRnAVdzKPCeW3eIoePqVr1kK_-tKTC3_PRA-kJy3-gGNDb5SVw6YlOCEn_pQXLMK76I3KrL9dltGbmqfSuw-buDf3SlLEpVsQOXhm6Mm4lcmgTCpGgtJ1V8FsvYp_pua2ujX0IHeNiA-4IaDeGmF1wAlsi-xhgzBX0XCQg2yqT9Q\" -o avatar.png)",
+      "Bash(curl -sL \"https://lh3.googleusercontent.com/aida-public/AB6AXuCaCbyQ81qIoDnsraijVEImHXf7CgULGXVDy58U29FEaf_gUUVfoy552JNBD7E2PK43mazCxBiJj4VC9UT61RbK-hTZWM3PvSg2ePMqcpO8yoUsqtoCDA1dRu_8omQPrg8CD2Ul6I70lvALsWdX2gaPY5AlJIb3DYSGnme7aevsWS822PmjyIvsqugNqDeO6SO-G6sr-V6c26VBaTfN2_oZ3x6H6hPiCG9vPd50NS3CC-oO69OTyWj-MLYOd_1AIAHtUzhed_Zucfo\" -o project-thriftup.jpg)",
+      "Bash(curl -sL \"https://lh3.googleusercontent.com/aida-public/AB6AXuBPhcAq4h9LQA7_7gnbqz2KUvKvI0CuAHo18wk2V3KW84Nj-poRL4VTswb1MtBb-FKZ6iDfVMuj6f5xkCyewyWvpBqwXHHpAzjRSS-7peP2sJOcAwSGM8hC554m2u0wwfpMR9Z3MlLT2u8JXL4sPi2wRTwm_fftCUDPusSJ8g77UfjDFu0Waw5I9nZ2zmUPCFnQpDL4L4PpC6f2Bbv8osefNoAo5rFpM9R1HH7luHLqpnwHynsMOpXBnJbKXgi6kR8zhc7qYTp0V7c\" -o project-pawsvet.jpg)",
+      "Bash(curl -sL \"https://lh3.googleusercontent.com/aida-public/AB6AXuDUtMANzbeFebz2yph_qtwqUt9YBjDrE-IDZfAs5U_NZYYZZEEUBxdJNZAdYwXlGhdnb5N3nEzUPWCaumO-z9OQT0JkNYXlFyFxYA-7Ol5h1QKodBK22eRirCapb3CsGXsJpcheoqfm8ypZGxdT7U1n0P6gZYcJmr0KcD63sqKZV_hg0MFjEMqM7u5kTMBKcxH1PAYopoCvVyN7UJznEpL9ItTynF6WrVc6teo49sDNuhCBqlPwHG5B9IG3Fv8I-KjHq47t7sDkHoc\" -o gallery-devcamp.jpg)",
+      "Bash(curl -sL \"https://lh3.googleusercontent.com/aida-public/AB6AXuAooArnmJ7afwHP_8poLnsK9C5K4JxUD13sDsGNB58ivNTmGqxKSmPoar8LhRdPujG0K9UUJDDNoa-_WCJs7258Pjp60rQ-cbGxd-0Wg9atMt1GeUtYg5gWvvApHC8ea3VPv5nCA43bZ7d0PaoslNaLhbvWnwJwpY4CXOzkCOoBy68fugKygUqqnMzvSIH__2aXhvpBbhqhqAkOeY4Lxbvi-YkSmLZv5atjopBiYGrSGKUJMzy2rZ8kswVK-nDn5ThzIppsqREs4zo\" -o gallery-seegla.jpg)",
+      "Bash(curl -sL \"https://lh3.googleusercontent.com/aida-public/AB6AXuCZkySrtqLQniYP_fJcptbeF1o6tjLz-2iPDgCUB5Feog3_zJE6jB6vxnF6LXEU-8EKzN7j8D7s1hNST-Jr0XTsPVQ4Oz7eX5DvzX-rlUwQ-kVpFBQKymHAa1gRfvsjFF2CVZXCGs8wQZJUkxfTQmh4byqTVFmNoXO55IeqoEFfRxxeOVWJ89GrO_OZzxZTY76oN4G19_P7vogEhh2fGajqcRmzRGNRKzgK-reW7iSreYdgOAHDOLHm0CRU6ynE3q3WiHuD-83lBdM\" -o gallery-arduino.jpg)",
+      "Bash(curl -sL \"https://lh3.googleusercontent.com/aida-public/AB6AXuDBCrwnywhImpYAFyYX4iYJEq7jsDFTwke4jY6i-hEpscsDHg41cYmawHZE3GXxmF6VRbrcsN8LryLtROXSkqVTp0VBvFbEzXILQbjEpF5hugbqBJRx5K706NKYWS6GrI7RDrPQu7eVtSv-BL0-sbrL7lH6IoRpWb3kymut5NoRE7r5yoAws2kMxTqEXj9JZOEidOWWhsITavoBpLVSdbNG9zYKDe-_VXNB0OhpcDVqquRjMrIlt2WzLL98kBGafJDUAJ6hERfOlZA\" -o gallery-meetup.jpg)",
+      "Bash(curl -sL \"https://lh3.googleusercontent.com/aida-public/AB6AXuBi2obDnVbfsCiqA_wyCthnd5ViTqg6s3m0Hw75kW8S7V6nb6sG9mQTyBNvY44DMm823ns4R0iOKx9ztFXKCe6hiyc083U91Oxr2R-zX-uJfHRMPng3aoTOVofhjlvYMhN3dJpDY_n9X1cd2srOU2MR-U_jZwGE7wVPufDBja_Ik5_3cIowNa7n-UCwWDPjIhTTzCatuan7fsxTXKWUxGUxwSpt0N8AuvIxRRnos-0thOEL67tAgZ7__W8z1Iv1HWk9vy5CuY8-vcQ\" -o gallery-pawsvetui.jpg)"
+    ]
+  }
+}
