@@ -3,9 +3,9 @@
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 
-const fastFade = {
+const fastFade: Variants = {
   hidden: { opacity: 0, y: 10 },
   visible: (delay = 0) => ({
     opacity: 1,
