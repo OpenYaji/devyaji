@@ -16,10 +16,10 @@ const fastFade: Variants = {
 
 /* ─── Data ─── */
 const experience = [
-  { year: "2026", title: "CTO - SEEGLA", role: "Core Architecture & Strategy" },
-  { year: "2026", title: "Lead Developer - Paws Vet", role: "Systems Development" },
-  { year: "2024-", title: "Lead Developer - Academic", role: "2nd Year Term Lead" },
-  { year: "2023", title: "Lead Developer - Foundation", role: "1st Year Term Lead" },
+  { year: "2026–Present", title: "Chief Technology Officer", role: "SEEGLA" },
+  { year: "A.Y 2025–2026", title: "Whole Section Lead Developer", role: "3rd Year School Projects" },
+  { year: "A.Y 2024–2025", title: "Group Lead Developer", role: "2nd Year School Projects" },
+  { year: "A.Y 2023–2024", title: "Group Lead Developer", role: "1st Year School Projects" },
 ];
 
 const projects = [
@@ -42,19 +42,17 @@ const projects = [
 ];
 
 const certs = [
-  "Huawei Developer Expert",
-  "Google Gen AI Leader",
-  "Oracle Gen AI Professional",
-  "AAP / PSIA",
+  "GitHub Actions",
+  "CyberSafety Seminar",
 ];
 
 const gallery = [
-  { img: "/portfolio/gallery-devcamp.jpg", alt: "Pitching at Developer Camp Manila 2026" },
-  { img: "/portfolio/gallery-seegla.jpg", alt: "SEEGLA Team brainstorming" },
-  { img: "/portfolio/gallery-arduino.jpg", alt: "Arduino hardware wiring" },
-  { img: "/portfolio/gallery-meetup.jpg", alt: "Community Tech Meetup Manila" },
-  { img: "/portfolio/gallery-pawsvetui.jpg", alt: "PawsVetClinic Dashboard Interface" },
-  { img: "/portfolio/gallery-devcamp.jpg", alt: "Pitching at Developer Camp" }, // Repeated to fill grid if needed, or rely on 5 items
+  { img: "/portfolio/BWAI.jpg", alt: "Build With Ai Manila 2026 - Break The Pattern Day 1" },
+  { img: "/portfolio/microsoft.jpg", alt: "Global AI Manila AgentCamp 2026" },
+  { img: "/portfolio/devcamp2.jpg", alt: "Day 1 Developer Camp Manila 2026" },
+  { img: "/portfolio/wordpress2.jpg", alt: "WordPress FOSS" },
+  { img: "/portfolio/devcamp.jpg", alt: "Day 2 Developer Camp Manila 2026 - Build Day" },
+  { img: "/portfolio/wordpress4.jpg", alt: "WordPress FOSS Camanava" },
 ];
 
 export default function V2Page() {
@@ -155,18 +153,31 @@ export default function V2Page() {
             <span className="text-xs font-medium text-zinc-500 cursor-pointer hover:text-zinc-900 hidden sm:block">View All &rsaquo;</span>
           </div>
           <div className="flex flex-col gap-6">
+            {/* Frontend Section */}
             <div>
               <h3 className="text-sm font-bold text-zinc-900 mb-3">Frontend</h3>
               <div className="flex flex-wrap gap-2">
-                {["JS (ES6+)", "React", "Next.js", "Vue", "Tailwind"].map(t => (
+                {["JavaScript", "TypeScript", "Next.js", "Tailwind", "React"].map(t => (
                   <span key={t} className="px-3 py-1.5 bg-zinc-100 text-xs font-medium text-zinc-800 rounded-md">{t}</span>
                 ))}
               </div>
             </div>
+
+            {/* Backend Section */}
             <div>
-              <h3 className="text-sm font-bold text-zinc-900 mb-3">Backend DevOps & Cloud</h3>
+              <h3 className="text-sm font-bold text-zinc-900 mb-3">Backend & BaaS</h3>
               <div className="flex flex-wrap gap-2">
-                {["AWS", "Docker", "K8s", "AI Integration"].map(t => (
+                {["Express", "Node.js", "Python", "Supabase", "Firebase", "MongoDB", "PostgreSQL"].map(t => (
+                  <span key={t} className="px-3 py-1.5 bg-zinc-100 text-xs font-medium text-zinc-800 rounded-md">{t}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* DevOps / Infrastructure Section */}
+            <div>
+              <h3 className="text-sm font-bold text-zinc-900 mb-3">DevOps / Infrastructure</h3>
+              <div className="flex flex-wrap gap-2">
+                {["AWS", "Docker", "Vercel", "Kubernetes"].map(t => (
                   <span key={t} className="px-3 py-1.5 bg-zinc-100 text-xs font-medium text-zinc-800 rounded-md">{t}</span>
                 ))}
               </div>
@@ -184,30 +195,52 @@ export default function V2Page() {
             {/* Left Column: Simple List */}
             <div className="flex flex-col gap-6">
               <div className="flex gap-4">
-                <span className="text-[13px] text-zinc-500 w-10 shrink-0 mt-0.5">2026</span>
+                <span className="text-[13px] text-zinc-500 w-24 shrink-0 mt-0.5">2026–Present</span>
                 <div>
-                  <h3 className="font-bold text-zinc-900 text-[14px]">CTO - SEEGLA</h3>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <span className="text-[13px] text-zinc-500 w-10 shrink-0 mt-0.5">2026</span>
-                <div>
-                  <h3 className="font-bold text-zinc-900 text-[14px]">Architecture & Strategy</h3>
+                  <h3 className="font-bold text-zinc-900 text-[14px]">CTO – SEEGLA</h3>
                   <p className="text-xs text-zinc-600">Core Architecture & Strategy</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <span className="text-[13px] text-zinc-500 w-10 shrink-0 mt-0.5">2025</span>
+                <span className="text-[13px] text-zinc-500 w-24 shrink-0 mt-0.5">2026–Present</span>
                 <div>
                   <h3 className="font-bold text-zinc-900 text-[14px]">AI Ops Engineer</h3>
-                  <p className="text-xs text-zinc-600">Examination - Placeholder</p>
+                  <p className="text-xs text-zinc-600">AI Operations & Systems</p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <span className="text-[13px] text-zinc-500 w-10 shrink-0 mt-0.5">2025</span>
+                <span className="text-[13px] text-zinc-500 w-24 shrink-0 mt-0.5">2025</span>
                 <div>
-                  <h3 className="font-bold text-zinc-900 text-[14px]">Software Engineer</h3>
-                  <p className="text-xs text-zinc-600">Placeholder</p>
+                  <h3 className="font-bold text-zinc-900 text-[14px]">Full Stack Software Engineer / DevOps</h3>
+                  <p className="text-xs text-zinc-600">3rd Year – 1st Sem</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <span className="text-[13px] text-zinc-500 w-24 shrink-0 mt-0.5">2025</span>
+                <div>
+                  <h3 className="font-bold text-zinc-900 text-[14px]">Full Stack Web Dev / Software Engineer</h3>
+                  <p className="text-xs text-zinc-600">2nd Year – 2nd Sem</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <span className="text-[13px] text-zinc-500 w-24 shrink-0 mt-0.5">2024</span>
+                <div>
+                  <h3 className="font-bold text-zinc-900 text-[14px]">Full Stack Web Developer</h3>
+                  <p className="text-xs text-zinc-600">2nd Year – 1st Sem</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <span className="text-[13px] text-zinc-500 w-24 shrink-0 mt-0.5">2024</span>
+                <div>
+                  <h3 className="font-bold text-zinc-900 text-[14px]">Arduino Engineer</h3>
+                  <p className="text-xs text-zinc-600">1st Year – 2nd Sem</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <span className="text-[13px] text-zinc-500 w-24 shrink-0 mt-0.5">2023</span>
+                <div>
+                  <h3 className="font-bold text-zinc-900 text-[14px]">Full Stack Web Developer</h3>
+                  <p className="text-xs text-zinc-600">1st Year – 1st Sem</p>
                 </div>
               </div>
             </div>
@@ -218,46 +251,37 @@ export default function V2Page() {
               <div className="relative pl-6 pb-6 w-full flex justify-between items-start group">
                 <div className="absolute left-0 top-1 w-[9px] h-[9px] bg-zinc-900 border-2 border-white" />
                 <div>
-                  <h3 className="font-bold text-zinc-900 text-[14px]">CTO - SEEGLA</h3>
-                  <p className="text-[13px] text-zinc-600 mt-0.5">Core Architecture & Strategy</p>
+                  <h3 className="font-bold text-zinc-900 text-[14px]">Chief Technology Officer</h3>
+                  <p className="text-[13px] text-zinc-600 mt-0.5">SEEGLA</p>
                 </div>
-                <span className="text-[13px] text-zinc-500 shrink-0">2026</span>
+                <span className="text-[13px] text-zinc-500 shrink-0">2026–Present</span>
               </div>
               {/* Item 2 */}
               <div className="relative pl-6 pb-6 w-full flex justify-between items-start group">
                 <div className="absolute left-0 top-1.5 w-[9px] h-[9px] border-2 border-zinc-300 bg-white rounded-full" />
                 <div>
-                  <h3 className="font-bold text-zinc-900 text-[14px]">AI Ops Engineer</h3>
-                  <p className="text-[13px] text-zinc-600 mt-0.5">Placeholder</p>
+                  <h3 className="font-bold text-zinc-900 text-[14px]">Whole Section Lead Developer</h3>
+                  <p className="text-[13px] text-zinc-600 mt-0.5">3rd Year School Projects</p>
                 </div>
-                <span className="text-[13px] text-zinc-500 shrink-0">2022</span>
+                <span className="text-[13px] text-zinc-500 shrink-0">A.Y 2025–2026</span>
               </div>
               {/* Item 3 */}
               <div className="relative pl-6 pb-6 w-full flex justify-between items-start group">
                 <div className="absolute left-0 top-1.5 w-[9px] h-[9px] border-2 border-zinc-300 bg-white rounded-full" />
                 <div>
-                  <h3 className="font-bold text-zinc-900 text-[14px]">Lead Developer - Academic</h3>
-                  <p className="text-[13px] text-zinc-600 mt-0.5">2nd Year Term Lead</p>
+                  <h3 className="font-bold text-zinc-900 text-[14px]">Group Lead Developer</h3>
+                  <p className="text-[13px] text-zinc-600 mt-0.5">2nd Year School Projects</p>
                 </div>
-                <span className="text-[13px] text-zinc-500 shrink-0">2024</span>
+                <span className="text-[13px] text-zinc-500 shrink-0">A.Y 2024–2025</span>
               </div>
               {/* Item 4 */}
-              <div className="relative pl-6 pb-6 w-full flex justify-between items-start group">
-                <div className="absolute left-0 top-1.5 w-[9px] h-[9px] border-2 border-zinc-300 bg-white rounded-full" />
-                <div>
-                  <h3 className="font-bold text-zinc-900 text-[14px]">Project Lead - Foundation</h3>
-                  <p className="text-[13px] text-zinc-600 mt-0.5">1st Year Term Lead</p>
-                </div>
-                <span className="text-[13px] text-zinc-500 shrink-0">2022</span>
-              </div>
-              {/* Item 5 */}
               <div className="relative pl-6 w-full flex justify-between items-start group">
                 <div className="absolute left-0 top-1.5 w-[9px] h-[9px] border-2 border-zinc-300 bg-white rounded-full" />
                 <div>
-                  <h3 className="font-bold text-zinc-900 text-[14px]">Project Lead - Paws Vet</h3>
-                  <p className="text-[13px] text-zinc-600 mt-0.5">Systems Development</p>
+                  <h3 className="font-bold text-zinc-900 text-[14px]">Group Lead Developer</h3>
+                  <p className="text-[13px] text-zinc-600 mt-0.5">1st Year School Projects</p>
                 </div>
-                <span className="text-[13px] text-zinc-500 shrink-0">2022</span>
+                <span className="text-[13px] text-zinc-500 shrink-0">A.Y 2023–2024</span>
               </div>
             </div>
           </div>
@@ -306,19 +330,11 @@ export default function V2Page() {
                 <h2 className="text-[16px] font-bold tracking-tight text-zinc-900">Recommendations</h2>
               </div>
               <p className="text-[14px] text-zinc-800 leading-relaxed font-medium">
-                "Bryl is the most talented software engineer I've mentored in a long time. He's fast learner, and always makes sure to have quality output a period of time. He also has been learning new technologies, and I find him to be objective, in importantly..."
+                "An advocate at heart who consistently encourages others to pursue this path. He is always helping and teaching us about the new technologies he learns, generously sharing his knowledge with others."
               </p>
               <div className="mt-6 flex flex-col gap-2">
                 <div className="w-10 h-[1px] bg-zinc-300"></div>
-                <div className="flex gap-1.5">
-                  <div className="w-2 h-2 rounded-full bg-zinc-400"></div>
-                  <div className="w-2 h-2 rounded-full bg-zinc-200"></div>
-                  <div className="w-2 h-2 rounded-full bg-zinc-200"></div>
-                  <div className="w-2 h-2 rounded-full bg-zinc-200"></div>
-                  <div className="w-2 h-2 rounded-full bg-zinc-200"></div>
-                  <div className="w-2 h-2 rounded-full bg-zinc-200"></div>
-                  <div className="w-2 h-2 rounded-full bg-zinc-200"></div>
-                </div>
+                <p className="text-[12px] text-zinc-500 font-medium">— Peer / Friend</p>
               </div>
             </motion.div>
           </div>
@@ -328,8 +344,8 @@ export default function V2Page() {
             <div>
               <h2 className="text-[15px] font-bold tracking-tight text-zinc-900 mb-3">A member of</h2>
               <ul className="text-[13px] text-zinc-800 flex flex-col gap-4 font-medium">
-                <li>Analytics & Artificial Intelligence Association of the Philippines (AAP)</li>
-                <li className="pt-4 border-t border-zinc-100">Philippine Software Industry Association</li>
+                <li>Amazon Web Services Learning Club - Quezon City University</li>
+                <li className="pt-4 border-t border-zinc-100">Developer Camp - Quezon City</li>
               </ul>
             </div>
 
@@ -337,17 +353,30 @@ export default function V2Page() {
               <h2 className="text-[15px] font-bold tracking-tight text-zinc-900 mb-3">Social Links</h2>
               <ul className="text-[13px] font-medium text-zinc-700 flex flex-col gap-3">
                 <li className="flex items-center gap-2 text-zinc-900 hover:opacity-70 cursor-pointer transition-opacity">
-                  <div className="w-5 h-5 bg-zinc-900 rounded-[4px] flex items-center justify-center text-white"><span className="text-[10px] font-bold">in</span></div> LinkedIn
+                  <a href="https://www.linkedin.com/in/john-rey-calipes-059187351/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                    <div className="w-5 h-5 bg-zinc-900 rounded-[4px] flex items-center justify-center text-white">
+                      <span className="text-[10px] font-bold">in</span>
+                    </div>
+                    LinkedIn
+                  </a>
                 </li>
+
                 <li className="flex items-center gap-2 text-zinc-900 hover:opacity-70 cursor-pointer transition-opacity">
-                  <div className="w-5 h-5 bg-zinc-900 rounded-full flex items-center justify-center text-white"><span className="text-[10px] font-bold">gh</span></div> GitHub
+                  <a href="https://github.com/OpenYaji" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                    <div className="w-5 h-5 bg-zinc-900 rounded-full flex items-center justify-center text-white">
+                      <span className="text-[10px] font-bold">gh</span>
+                    </div>
+                    GitHub
+                  </a>
                 </li>
               </ul>
             </div>
 
             <div>
-              <h2 className="text-[15px] font-bold tracking-tight text-zinc-900 mb-3">Speaking</h2>
-              <p className="text-[13px] text-zinc-800 font-medium leading-relaxed">Available for speaking at events target software development and emerging technologies.</p>
+              <h2 className="text-[15px] font-bold tracking-tight text-zinc-900 mb-3">Speaking & Talks</h2>
+              <p className="text-[13px] text-zinc-800 font-medium leading-relaxed">
+                My goal for 2026 is to share my journey and insights through public speaking, focusing on software development and emerging technologies.
+              </p>
             </div>
 
             <div>
@@ -357,7 +386,7 @@ export default function V2Page() {
                   <span className="material-symbols-outlined text-[16px] mt-0.5 font-light">mail</span>
                   <div className="leading-tight">
                     <span className="block mb-0.5">Email</span>
-                    <span className="text-zinc-500 text-xs">jrbcalipes@gmail.com</span>
+                    <span className="text-zinc-500 text-xs">johnreybisnarcalipes@gmail.com</span>
                   </div>
                 </li>
                 <li className="flex items-start justify-between cursor-pointer group">
@@ -406,7 +435,7 @@ export default function V2Page() {
 
       {/* Footer */}
       <footer className="max-w-4xl mx-auto px-6 pt-12 pb-8 flex flex-col md:flex-row justify-between items-center text-[13px] font-medium text-zinc-700 border-t border-zinc-100">
-        <p>© 2024 John Rey Bisnar Calipes. All rights reserved.</p>
+        <p>© 2026 John Rey Bisnar Calipes. All rights reserved.</p>
         <div className="flex items-center gap-4 mt-4 md:mt-0 font-bold">
           <div className="flex items-center gap-2 mr-2">
             <span className="material-symbols-outlined text-[18px] cursor-pointer hover:opacity-70">close</span>

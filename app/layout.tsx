@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "JRBC | Digital Curator & CTO",
+  title: "JRBC | DEVYAJI",
   description:
     "John Rey Bisnar Calipes — AI & Full-Stack Software Engineer, Co-Founder / CTO at SEEGLA, Developer Camp Manila 2026 Finalist.",
 };

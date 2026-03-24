@@ -31,22 +31,25 @@ const fadeUp = {
 /* ─── Data ────────────────────────────────────────────────────────── */
 const experience = [
   { year: "2026 / CURRENT", title: "CTO – SEEGLA", role: "CORE ARCHITECTURE & STRATEGY" },
-  { year: "2026", title: "PROJECT LEAD – PAWS VET", role: "SYSTEMS DEVELOPMENT" },
-  { year: "2024", title: "LEAD DEVELOPER – ACADEMIC", role: "2ND YEAR TERM LEAD" },
-  { year: "2023", title: "PROJECT LEAD – FOUNDATION", role: "1ST YEAR TERM LEAD" },
+  { year: "2026 / CURRENT", title: "AI OPS ENGINEER", role: "AI OPERATIONS & SYSTEMS" },
+  { year: "2025", title: "FULL STACK SOFTWARE ENGINEER / DEVOPS", role: "3RD YEAR – 1ST SEM" },
+  { year: "2025", title: "FULL STACK WEB DEV / SOFTWARE ENGINEER", role: "2ND YEAR – 2ND SEM" },
+  { year: "2024", title: "FULL STACK WEB DEVELOPER", role: "2ND YEAR – 1ST SEM" },
+  { year: "2024", title: "ARDUINO ENGINEER", role: "1ST YEAR – 2ND SEM" },
+  { year: "2023", title: "FULL STACK WEB DEVELOPER", role: "1ST YEAR – 1ST SEM" },
 ];
 
 const projects = [
   // SCHOOL PROJECTS
-  { num: "01", type: "school", category: "AI / HEALTHCARE", title: "PAWS VET CLINIC", metadata: "3rd Yr / 2nd Sem (Current)", img: "/portfolio/ThriUp.png", alt: "AI Vet Clinic System" },
+  { num: "01", type: "school", category: "AI / HEALTHCARE", title: "PAWS VET CLINIC", metadata: "3rd Yr / 2nd Sem (Current)", img: "/portfolio/pawsmaskot.jpg", alt: "AI Vet Clinic System" },
   { num: "02", type: "school", category: "EDUCATION", title: "GYMNAZO ACADEMY", metadata: "3rd Yr / 1st Sem (Implemented)", img: "/portfolio/ThriUp.png", alt: "School Management System" },
   { num: "03", type: "school", category: "EDUCATION", title: "SKYULAR PORTAL", metadata: "2nd Yr / 2nd Sem", img: "/portfolio/ThriUp.png", alt: "QCU Student Portal" },
   { num: "04", type: "school", category: "COMMUNITY", title: "PAWSITIVITY", metadata: "2nd Yr / 1st Sem", img: "/portfolio/pawsmaskot.jpg", alt: "Pet Adoption System" },
-  { num: "05", type: "school", category: "IOT / HARDWARE", title: "SMART BUILDING", metadata: "1st Yr / 2nd Sem", img: "/portfolio/ThriUp.png", alt: "Arduino Safety System" },
+  { num: "05", type: "school", category: "IOT / HARDWARE", title: "SMART IoT BUILDING", metadata: "1st Yr / 2nd Sem", img: "/portfolio/smart.jpg", alt: "Arduino Safety System" },
   { num: "06", type: "school", category: "HEALTH", title: "KYUSIFIT", metadata: "1st Yr / 1st Sem", img: "/portfolio/ThriUp.png", alt: "Fitness Management System" },
 
   // PASSION PROJECTS
-  { num: "07", type: "passion", category: "E-COMMERCE", title: "THRIFTUP", metadata: "Passion Project", img: "/portfolio/ThriUp.png", alt: "ThriftUp UI" },
+  { num: "07", type: "passion", category: "E-COMMERCE", title: "THRIFTUP", metadata: "Passion Project", img: "/portfolio/tup.png", alt: "ThriftUp UI" },
   { num: "08", type: "passion", category: "ARTIFICIAL INTELLIGENCE", title: "AI ANALYZER", metadata: "Passion Project", img: "/portfolio/ThriUp.png", alt: "AI Analyzer Tool" },
   { num: "09", type: "passion", category: "FINANCE / COMMUNITY", title: "AMBAGAN", metadata: "Passion Project", img: "/portfolio/ThriUp.png", alt: "Ambagan App" },
 
@@ -75,10 +78,8 @@ const gallery = [
 ];
 
 const certs = [
-  "Huawei Developer Expert",
-  "Google Gen AI Leader",
-  "Oracle Gen AI Professional",
-  "AAP / PSIA",
+  "GITHUB ACTION",
+  "CYBER SAFETY",
 ];
 
 /* ─── Page ────────────────────────────────────────────────────────── */
@@ -372,27 +373,26 @@ export default function Page() {
               <h2 className="text-xs text-outline-variant tracking-[0.4em] uppercase">// ARSENAL</h2>
               <div className="flex flex-col gap-8">
                 <div>
-                  <span className="text-[10px] text-outline-variant tracking-widest block mb-4 uppercase">Frontend / Interface</span>
+                  <span className="text-[10px] text-outline-variant tracking-widest block mb-4 uppercase">Frontend</span>
                   <div className="flex flex-wrap gap-2">
-                    {["JS (ES6+)", "REACT", "VUE", "TAILWIND"].map((t) => (
+                    {["JAVASCRIPT", "TYPESCRIPT", "REACT", "VUE", "TAILWIND"].map((t) => (
                       <span key={t} className="px-4 py-2 bg-surface-container-high text-xs font-bold border border-outline-variant/10">{t}</span>
                     ))}
                     <span className="px-4 py-2 bg-inverse-primary text-white text-xs font-bold">NEXT.JS</span>
                   </div>
                 </div>
                 <div>
-                  <span className="text-[10px] text-outline-variant tracking-widest block mb-4 uppercase">Backend / Intelligent</span>
+                  <span className="text-[10px] text-outline-variant tracking-widest block mb-4 uppercase">Backend & BaaS</span>
                   <div className="flex flex-wrap gap-2">
-                    {["NODE.JS", "PYTHON", "AI INTEGRATION"].map((t) => (
+                    {["EXPRESS", "NODE.JS", "PYTHON", "SUPABASE", "FIREBASE", "MONGODB", "POSTGRESQL"].map((t) => (
                       <span key={t} className="px-4 py-2 bg-surface-container-high text-xs font-bold border border-outline-variant/10">{t}</span>
                     ))}
-                    <span className="px-4 py-2 bg-inverse-primary text-white text-xs font-bold">FAST API</span>
                   </div>
                 </div>
                 <div>
-                  <span className="text-[10px] text-outline-variant tracking-widest block mb-4 uppercase">Infrastructure</span>
+                  <span className="text-[10px] text-outline-variant tracking-widest block mb-4 uppercase">DevOps / Infrastructure</span>
                   <div className="flex flex-wrap gap-2">
-                    {["AWS", "DOCKER", "K8S"].map((t) => (
+                    {["AWS", "DOCKER", "VERCEL", "KUBERNETES"].map((t) => (
                       <span key={t} className="px-4 py-2 bg-surface-container-high text-xs font-bold border border-outline-variant/10">{t}</span>
                     ))}
                   </div>
@@ -405,7 +405,7 @@ export default function Page() {
 
               <div className="flex flex-col gap-[50vh] pb-32">
                 {projects
-                  .filter((p) => ["HOTEL SUPER SYSTEM", "PAWS VET CLINIC", "THRIFTUP"].includes(p.title))
+                  .filter((p) => ["SMART IoT BUILDING", "PAWS VET CLINIC", "THRIFTUP"].includes(p.title))
                   .map((p, i) => (
                     <motion.div
                       key={p.num}
