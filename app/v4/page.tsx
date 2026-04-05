@@ -95,7 +95,7 @@ export default function V4Page() {
       </AnimatePresence>
 
       <div className="h-screen w-screen overflow-hidden bg-cover bg-center relative text-white font-sans selection:bg-blue-500/30 selection:text-white"
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop')" }}>
+        style={{ backgroundImage: "url('https://i.pinimg.com/originals/fb/8b/e6/fb8be60f4b8c6c3ec6b5024ce9fde65f.jpg')" }}>
 
         {/* TOP MENU BAR */}
         <div className="absolute top-0 left-0 right-0 h-7 backdrop-blur-md bg-black/40 border-b border-white/10 z-[100] flex items-center justify-between px-4 text-xs font-medium">
@@ -192,10 +192,10 @@ export default function V4Page() {
               dragElastic={0}
               onMouseDown={() => setActiveApp(app.id)}
               initial={{ scale: 0.9, opacity: 0, x: "-50%", y: "-50%" }}
-              animate={{ 
-                scale: 1, 
-                opacity: 1, 
-                x: isFullscreen ? "0%" : "-50%", 
+              animate={{
+                scale: 1,
+                opacity: 1,
+                x: isFullscreen ? "0%" : "-50%",
                 y: isFullscreen ? "0%" : "-50%",
                 width: isFullscreen ? "100vw" : undefined,
                 height: isFullscreen ? "calc(100vh - 28px)" : undefined,
@@ -215,9 +215,8 @@ export default function V4Page() {
                   e.stopPropagation();
                 }
               }}
-              className={`absolute flex flex-col bg-zinc-900/80 backdrop-blur-3xl border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-300 ${
-                isFullscreen ? "rounded-none" : "min-w-[320px] min-h-[300px] w-[90vw] max-w-4xl h-[80vh] max-h-[600px] rounded-2xl resize"
-              }`}
+              className={`absolute flex flex-col bg-zinc-900/80 backdrop-blur-3xl border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-300 ${isFullscreen ? "rounded-none" : "min-w-[320px] min-h-[300px] w-[90vw] max-w-4xl h-[80vh] max-h-[600px] rounded-2xl resize"
+                }`}
             >
               {/* WINDOW HEADER */}
               <div className="h-12 bg-black/20 border-b border-white/5 flex items-center justify-center relative cursor-move">
@@ -238,7 +237,7 @@ export default function V4Page() {
               </div>
 
               {/* WINDOW CONTENT */}
-              <div 
+              <div
                 className="flex-1 overflow-y-auto p-6 cursor-default relative bg-zinc-900/40"
                 onPointerDownCapture={(e) => e.stopPropagation()}
                 onWheelCapture={(e) => e.stopPropagation()}
@@ -304,13 +303,13 @@ function BrowserArea() {
       {/* Safari Toolbar */}
       <div className="flex items-center justify-between gap-4 px-4 py-2 bg-slate-100 border-b border-slate-300">
         <div className="flex gap-3 text-slate-400">
-          <span 
+          <span
             className={`material-symbols-outlined text-lg transition-colors ${currentIndex > 0 ? "cursor-pointer hover:text-slate-700 text-slate-600" : "opacity-30"}`}
             onClick={goBack}
           >
             arrow_back_ios
           </span>
-          <span 
+          <span
             className={`material-symbols-outlined text-lg transition-colors ${currentIndex < history.length - 1 ? "cursor-pointer hover:text-slate-700 text-slate-600" : "opacity-30"}`}
             onClick={goForward}
           >
@@ -319,8 +318,8 @@ function BrowserArea() {
         </div>
         <div className="flex-1 max-w-2xl mx-auto flex items-center bg-white border border-slate-300 rounded-md px-3 py-1 shadow-sm">
           <span className="material-symbols-outlined text-slate-400 text-sm mr-2">lock</span>
-          <input 
-            type="text" 
+          <input
+            type="text"
             className="w-full outline-none text-sm bg-transparent"
             value={inputUrl}
             onChange={(e) => setInputUrl(e.target.value)}
@@ -336,17 +335,17 @@ function BrowserArea() {
       {/* Webview Content */}
       <div className="flex-1 relative bg-slate-50">
         <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 pointer-events-none z-0">
-           <span className="material-symbols-outlined text-6xl mb-4 text-slate-300">explore</span>
-           <p className="text-sm font-medium">Safari Web View Mockup</p>
-           <p className="text-xs mt-2">Loading URL: <span className="text-blue-500">{currentUrl}</span></p>
+          <span className="material-symbols-outlined text-6xl mb-4 text-slate-300">explore</span>
+          <p className="text-sm font-medium">Safari Web View Mockup</p>
+          <p className="text-xs mt-2">Loading URL: <span className="text-blue-500">{currentUrl}</span></p>
         </div>
-        <iframe 
-           key={currentUrl + reloadKey}
-           src={currentUrl} 
-           className="w-full h-full relative z-10 bg-white" 
-           sandbox="allow-scripts allow-same-origin" 
-           onLoad={(e) => { (e.target as HTMLIFrameElement).style.opacity = '1'; }}
-           onError={(e) => { (e.target as HTMLIFrameElement).style.opacity = '0'; }}
+        <iframe
+          key={currentUrl + reloadKey}
+          src={currentUrl}
+          className="w-full h-full relative z-10 bg-white"
+          sandbox="allow-scripts allow-same-origin"
+          onLoad={(e) => { (e.target as HTMLIFrameElement).style.opacity = '1'; }}
+          onError={(e) => { (e.target as HTMLIFrameElement).style.opacity = '0'; }}
         />
       </div>
     </div>
@@ -492,7 +491,7 @@ function AboutArea() {
 
 function GalleryArea() {
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
-  
+
   const images = [
     "/portfolio/dcon.jpg",
     "/portfolio/devcamp.jpg",
@@ -511,8 +510,8 @@ function GalleryArea() {
     <>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 pb-4">
         {images.map((src, i) => (
-          <div 
-            key={i} 
+          <div
+            key={i}
             onClick={() => setSelectedImg(src)}
             className="relative group rounded-xl overflow-hidden aspect-video bg-zinc-800 border border-white/10 cursor-pointer"
           >
@@ -541,14 +540,14 @@ function GalleryArea() {
             <button className="absolute top-6 right-6 text-white hover:text-red-400 transition-colors z-50">
               <span className="material-symbols-outlined text-4xl">close</span>
             </button>
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               className="relative w-full h-full max-w-6xl max-h-[90vh] rounded-2xl overflow-hidden shadow-2xl border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
-              <Image 
+              <Image
                 src={selectedImg}
                 alt="Fullscreen gallery view"
                 fill
