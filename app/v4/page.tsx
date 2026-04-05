@@ -12,6 +12,7 @@ const APPS = [
   { id: "techstack", label: "Terminal", icon: "terminal", iconBg: "bg-gradient-to-b from-zinc-700 to-zinc-900 border border-zinc-700", iconColor: "text-green-400" },
   { id: "gallery", label: "Photos", icon: "photo_library", iconBg: "bg-gradient-to-tr from-yellow-300 via-pink-500 to-purple-600 border border-pink-400/50", iconColor: "text-white" },
   { id: "about", label: "Contacts", icon: "person", iconBg: "bg-gradient-to-b from-slate-300 to-slate-400 border border-slate-300/50", iconColor: "text-white" },
+  { id: "wheel", label: "Spin Wheel", icon: "change_circle", iconBg: "bg-gradient-to-tr from-orange-400 via-red-500 to-pink-500 border border-red-400/50", iconColor: "text-white" },
 ];
 
 export default function V4Page() {
@@ -248,6 +249,7 @@ export default function V4Page() {
                 {app.id === "techstack" && <TechStackArea />}
                 {app.id === "gallery" && <GalleryArea />}
                 {app.id === "about" && <AboutArea />}
+                {app.id === "wheel" && <WheelArea />}
               </div>
             </motion.div>
           );
@@ -558,5 +560,275 @@ function GalleryArea() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+interface WheelOption {
+  id: string;
+  text: string;
+  color: string;
+}
+
+function WheelArea() {
+  const [options, setOptions] = useState<WheelOption[]>([
+    { id: "1", text: "Game 1", color: "#f43f5e" },
+    { id: "2", text: "Game 2", color: "#3b82f6" },
+    { id: "3", text: "Game 3", color: "#10b981" },
+    { id: "4", text: "Study", color: "#f59e0b" },
+    { id: "5", text: "Sleep", color: "#8b5cf6" },
+    { id: "6", text: "Anime", color: "#ec4899" },
+    { id: "7", text: "Code", color: "#06b6d4" }
+  ]);
+  const [newOption, setNewOption] = useState("");
+  const [newColor, setNewColor] = useState("#eab308");
+  const [isSpinning, setIsSpinning] = useState(false);
+  const [rotation, setRotation] = useState(0);
+  const [result, setResult] = useState<WheelOption | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [showSaveSuccess, setShowSaveSuccess] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("devyaji_wheel_options");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Backward compatibility check for old string-based options
+          if (typeof parsed[0] === 'string') {
+            const migrated = parsed.map((text, i) => ({
+              id: Math.random().toString(36).substring(7),
+              text: text as string,
+              color: `hsl(${Math.round((i * 360) / Math.max(parsed.length, 1))}, 70%, 60%)`
+            }));
+            setOptions(migrated);
+          } else {
+            setOptions(parsed);
+          }
+        } else {
+          setOptions([]);
+        }
+      }
+    } catch (e) {
+      console.error("Could not load wheel options", e);
+    } finally {
+      setIsLoaded(true);
+    }
+  }, []);
+
+  const saveOptions = () => {
+    localStorage.setItem("devyaji_wheel_options", JSON.stringify(options));
+    setShowSaveSuccess(true);
+    setTimeout(() => setShowSaveSuccess(false), 2000);
+  };
+
+  const addOption = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newOption.trim()) {
+      setOptions([...options, {
+        id: Math.random().toString(36).substring(7),
+        text: newOption.trim(),
+        color: newColor
+      }]);
+      setNewOption("");
+      const randomColors = ["#f43f5e", "#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ec4899", "#06b6d4", "#eab308"];
+      setNewColor(randomColors[Math.floor(Math.random() * randomColors.length)]);
+    }
+  };
+
+  const removeOption = (id: string) => {
+    if (isSpinning) return;
+    setOptions(options.filter(opt => opt.id !== id));
+  };
+
+  const updateOptionColor = (id: string, color: string) => {
+    setOptions(options.map(opt => opt.id === id ? { ...opt, color } : opt));
+  };
+
+  const spin = () => {
+    if (options.length === 0 || isSpinning) return;
+    setIsSpinning(true);
+    setResult(null);
+
+    const spinDuration = 4000;
+    const extraSpins = Math.floor(5 + Math.random() * 5); // strictly 5 to 9 full spins
+    const randomIndex = Math.floor(Math.random() * options.length);
+    const sliceAngle = 360 / options.length;
+    
+    const extraRotation = extraSpins * 360;
+    const targetAngle = 360 - (randomIndex * sliceAngle) - (sliceAngle / 2);
+    
+    // Calculate final rotation ensuring we land on the correct angle going forward
+    const currentAngle = rotation % 360;
+    let angleDiff = targetAngle - currentAngle;
+    // ensure we always spin forward
+    if (angleDiff < 0) {
+      angleDiff += 360;
+    }
+
+    const finalRotation = rotation + extraRotation + angleDiff;
+
+    setRotation(finalRotation);
+
+    setTimeout(() => {
+      setIsSpinning(false);
+      setResult(options[randomIndex]);
+    }, spinDuration);
+  };
+
+  const conicGradient = `conic-gradient(${options.map((opt, i) => {
+    const start = i * (360 / options.length);
+    const end = (i + 1) * (360 / options.length);
+    return `${opt.color} ${start}deg ${end}deg`;
+  }).join(", ")})`;
+
+  return (
+    <div className="flex flex-col md:flex-row gap-8 h-full overflow-y-auto pb-8 items-center justify-center p-4">
+      {/* Wheel Section */}
+      <div className="flex flex-col items-center justify-center relative w-full md:w-1/2 max-w-sm">
+        {/* Pointer (Top instead of right looks more natural for users, so angle 0 is normally top in CSS, actually in conic-gradient 0 is top). 
+            Wait, let's just place the pointer on the right, since 0deg in CSS rotate usually starts from top, but conic gradient starts from top. Let's place it at the top! */}
+        <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 z-10 w-8 h-8 pointer-events-none drop-shadow-[0_0_8px_rgba(0,0,0,0.5)]">
+          <div className="w-0 h-0 border-x-[16px] border-x-transparent border-t-[28px] border-t-white" />
+        </div>
+        
+        <motion.div 
+          className="relative w-64 h-64 md:w-80 md:h-80 rounded-full border-[8px] border-zinc-800 overflow-hidden shadow-2xl flex-shrink-0"
+          animate={{ rotate: rotation }}
+          transition={{ duration: 4, ease: [0.15, 0.85, 0.15, 1] }} 
+          style={{ background: options.length > 0 ? conicGradient : "#3f3f46" }}
+        >
+          {options.length > 0 && options.map((opt, i) => {
+            const sliceAngle = 360 / options.length;
+            const textAngle = (i * sliceAngle) + (sliceAngle / 2);
+            return (
+              <div 
+                key={i} 
+                className="absolute top-1/2 left-1/2 origin-left pointer-events-none flex items-center"
+                style={{
+                  transform: `translateY(-50%) rotate(${textAngle - 90}deg) translateX(40px)`,
+                }}
+              >
+                <span className="text-white font-bold text-sm drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] truncate max-w-[80px]">
+                  {opt.text}
+                </span>
+              </div>
+            )
+          })}
+          {options.length === 0 && (
+            <div className="absolute inset-0 flex items-center justify-center text-zinc-400 font-medium">Add Options</div>
+          )}
+        </motion.div>
+
+        <button 
+          onClick={spin}
+          disabled={isSpinning || options.length === 0}
+          className="mt-8 px-8 py-3 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-400 hover:to-pink-400 text-white font-bold rounded-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-105 active:scale-95"
+        >
+          {isSpinning ? "SPINNING..." : "SPIN THE WHEEL!"}
+        </button>
+
+        <AnimatePresence>
+          {result && (
+            <motion.div 
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 whitespace-nowrap bg-zinc-900/90 backdrop-blur-md px-6 py-4 rounded-2xl border-2 shadow-2xl flex flex-col items-center"
+              style={{ borderColor: result.color }}
+            >
+              <span className="text-xs text-zinc-400 uppercase tracking-widest mb-1">Result</span>
+              <span className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
+                {result.text}
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Options Section */}
+      <div className="w-full md:w-1/2 max-w-sm flex flex-col bg-black/20 p-6 rounded-2xl border border-white/10 h-full max-h-[400px]">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-bold text-white flex items-center gap-2">
+            <span className="material-symbols-outlined text-pink-400">tune</span>
+            Options
+          </h3>
+          <button 
+            onClick={saveOptions}
+            className={`text-xs font-bold px-3 py-1.5 rounded-md flex items-center gap-1 transition-colors shadow-lg shadow-black/20 ${
+              showSaveSuccess 
+                ? "bg-green-600/80 text-white" 
+                : "bg-blue-600/80 hover:bg-blue-500 text-white"
+            }`}
+          >
+            <span className="material-symbols-outlined text-[14px]">
+              {showSaveSuccess ? "check" : "save"}
+            </span>
+            {showSaveSuccess ? "Saved!" : "Save"}
+          </button>
+        </div>
+        
+        <form onSubmit={addOption} className="flex gap-2 mb-4">
+          <div className="relative w-10 h-10 shrink-0 border border-white/10 rounded-lg overflow-hidden cursor-pointer flex items-center justify-center shadow-inner">
+            <input 
+              type="color"
+              value={newColor}
+              onChange={(e) => setNewColor(e.target.value)}
+              className="absolute -top-2 -left-2 w-14 h-14 cursor-pointer opacity-0 z-10"
+              title="Choose color"
+            />
+            <div className="absolute inset-0 pointer-events-none" style={{ backgroundColor: newColor }} />
+          </div>
+          <input 
+            type="text" 
+            value={newOption}
+            onChange={(e) => setNewOption(e.target.value)}
+            placeholder="Add new option..."
+            className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-pink-500 transition-colors"
+            maxLength={15}
+          />
+          <button type="submit" className="bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-lg transition-colors flex items-center justify-center">
+            <span className="material-symbols-outlined text-[18px]">add</span>
+          </button>
+        </form>
+
+        <div className="flex-1 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
+          <AnimatePresence>
+            {options.map((opt) => (
+              <motion.div 
+                key={opt.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="flex items-center justify-between bg-white/5 border border-white/5 px-3 py-2 rounded-lg group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-5 h-5 rounded-full overflow-hidden shrink-0 relative cursor-pointer border border-white/20 shadow-sm transition-transform hover:scale-110">
+                    <input 
+                        type="color" 
+                        value={opt.color} 
+                        onChange={(e) => updateOptionColor(opt.id, e.target.value)}
+                        className="absolute -top-2 -left-2 w-10 h-10 cursor-pointer opacity-0 z-10"
+                        title="Change option color"
+                    />
+                    <div className="absolute inset-0 pointer-events-none" style={{ backgroundColor: opt.color }} />
+                  </div>
+                  <span className="text-sm font-medium text-zinc-200">{opt.text}</span>
+                </div>
+                <button 
+                  onClick={() => removeOption(opt.id)}
+                  disabled={isSpinning}
+                  className="text-zinc-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all disabled:opacity-0"
+                >
+                  <span className="material-symbols-outlined text-[16px]">close</span>
+                </button>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+          {options.length === 0 && (
+            <p className="text-center text-zinc-500 text-sm py-4">No options added yet.</p>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
