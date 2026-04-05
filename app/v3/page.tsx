@@ -138,6 +138,16 @@ export default function V3Page() {
                         <span className="material-symbols-outlined text-[18px]">light_mode</span>
                         <span className="text-xs font-bold tracking-widest uppercase truncate">Minimalist</span>
                       </button>
+                      <button
+                        onClick={() => {
+                          setIsDropdownOpen(false);
+                          setTargetRoute("/v4");
+                        }}
+                        className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-white/10 text-zinc-300 hover:text-white transition-colors border-t border-white/5"
+                      >
+                        <span className="material-symbols-outlined text-[18px]">desktop_mac</span>
+                        <span className="text-xs font-bold tracking-widest uppercase truncate">MacOS Desktop</span>
+                      </button>
                     </motion.div>
                   )}
                 </AnimatePresence>

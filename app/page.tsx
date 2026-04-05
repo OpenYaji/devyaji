@@ -194,6 +194,16 @@ export default function Page() {
                       <span className="material-symbols-outlined text-[18px]">grid_view</span>
                       <span className="text-sm font-bold tracking-widest uppercase truncate">Bento</span>
                     </button>
+                    <button
+                      onClick={() => {
+                        setIsDropdownOpen(false);
+                        setTargetRoute("/v4");
+                      }}
+                      className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-inverse-primary/20 hover:text-inverse-primary text-[#e2e2e2] transition-colors border-t border-outline-variant/10"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">desktop_mac</span>
+                      <span className="text-sm font-bold tracking-widest uppercase truncate">MacOS Desktop</span>
+                    </button>
                   </motion.div>
                 )}
               </AnimatePresence>

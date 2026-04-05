@@ -158,6 +158,16 @@ export default function V2Page() {
                         <span className="material-symbols-outlined text-[18px]">grid_view</span>
                         <span className="text-xs font-bold tracking-widest uppercase truncate">Bento</span>
                       </button>
+                      <button
+                        onClick={() => {
+                          setIsDropdownOpen(false);
+                          setTargetRoute("/v4");
+                        }}
+                        className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-zinc-100 text-zinc-900 transition-colors border-t border-zinc-100"
+                      >
+                        <span className="material-symbols-outlined text-[18px]">desktop_mac</span>
+                        <span className="text-xs font-bold tracking-widest uppercase truncate">MacOS Desktop</span>
+                      </button>
                     </motion.div>
                   )}
                 </AnimatePresence>
