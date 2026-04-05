@@ -57,8 +57,9 @@ const gallery = [
 
 export default function V2Page() {
   const router = useRouter();
-  const [isWipingOut, setIsWipingOut] = useState(false);
+  const [targetRoute, setTargetRoute] = useState<string | null>(null);
   const [initWipe, setInitWipe] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
     <div className="bg-white min-h-screen text-zinc-900 selection:bg-zinc-900 selection:text-white font-sans relative z-10 w-full overflow-x-hidden pb-12">
@@ -74,13 +75,13 @@ export default function V2Page() {
             onAnimationComplete={() => setInitWipe(false)}
           />
         )}
-        {isWipingOut && (
+        {targetRoute && (
           <motion.div
             className="fixed inset-0 z-[9999] pointer-events-none bg-[#0e0e0e]"
             initial={{ clipPath: "polygon(0 0, 0 0, -50% 100%, -50% 100%)" }}
             animate={{ clipPath: "polygon(0 0, 150% 0, 100% 100%, -50% 100%)" }}
             transition={{ type: "spring", stiffness: 120, damping: 14, mass: 0.5 }}
-            onAnimationComplete={() => router.push("/")}
+            onAnimationComplete={() => router.push(targetRoute)}
           />
         )}
       </AnimatePresence>
@@ -105,13 +106,62 @@ export default function V2Page() {
                 <h1 className="text-2xl lg:text-3xl font-bold tracking-tight text-zinc-900">John Rey Bisnar Calipes</h1>
                 <span className="material-symbols-outlined text-blue-500 text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
               </div>
-              <button
-                onClick={() => setIsWipingOut(true)}
-                className="w-10 h-10 rounded-full border border-zinc-200 text-zinc-500 hover:bg-zinc-900 hover:border-zinc-900 hover:text-white transition-all transform active:scale-95 flex items-center justify-center shrink-0"
-                aria-label="Toggle Theme"
+              {/* Theme Dropdown */}
+              <div 
+                className="relative" 
+                onMouseEnter={() => setIsDropdownOpen(true)}
+                onMouseLeave={() => setIsDropdownOpen(false)}
               >
-                <span className="material-symbols-outlined text-[18px]">contrast</span>
-              </button>
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="h-10 px-4 rounded-full border border-zinc-200 text-zinc-600 hover:bg-zinc-900 hover:border-zinc-900 hover:text-white transition-all flex items-center justify-center gap-2"
+                  aria-label="Theme Menu"
+                >
+                  <span className="material-symbols-outlined text-[18px]">contrast</span>
+                  <span className="text-xs font-bold uppercase tracking-widest hidden md:block">Theme</span>
+                  <span className={`material-symbols-outlined text-[18px] transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}>arrow_drop_down</span>
+                </button>
+                
+                <AnimatePresence>
+                  {isDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute right-0 top-full mt-2 w-48 bg-white border border-zinc-200 rounded-xl overflow-hidden shadow-lg flex flex-col z-[100]"
+                    >
+                      <button
+                        onClick={() => {
+                          setIsDropdownOpen(false);
+                          setTargetRoute("/");
+                        }}
+                        className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-zinc-100 text-zinc-900 transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-[18px]">dark_mode</span>
+                        <span className="text-xs font-bold tracking-widest uppercase truncate">Cinematic</span>
+                      </button>
+                      <button
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="flex items-center gap-3 w-full px-4 py-3 text-left bg-zinc-50 text-blue-600 transition-colors border-t border-zinc-100"
+                      >
+                        <span className="material-symbols-outlined text-[18px]">light_mode</span>
+                        <span className="text-xs font-bold tracking-widest uppercase truncate">Minimalist</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsDropdownOpen(false);
+                          setTargetRoute("/v3");
+                        }}
+                        className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-zinc-100 text-zinc-900 transition-colors border-t border-zinc-100"
+                      >
+                        <span className="material-symbols-outlined text-[18px]">grid_view</span>
+                        <span className="text-xs font-bold tracking-widest uppercase truncate">Bento</span>
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
             <div className="flex items-center gap-1 text-zinc-600 text-sm mb-1">
               <span className="material-symbols-outlined text-[16px]">location_on</span>
@@ -451,7 +501,7 @@ export default function V2Page() {
       {/* Mobile Toggle Button for fast minimal-to-cinematic */}
       <div className="fixed bottom-6 right-6 md:hidden z-50">
         <button
-          onClick={() => setIsWipingOut(true)}
+          onClick={() => setTargetRoute("/")}
           className="w-12 h-12 rounded-full border border-zinc-900 bg-white shadow-lg text-zinc-900 flex items-center justify-center hover:bg-zinc-900 hover:text-white transition-all transform active:scale-95"
         >
           <span className="material-symbols-outlined text-[20px]">contrast</span>

@@ -86,8 +86,9 @@ const certs = [
 export default function Page() {
   const heroRef = useRef<HTMLElement>(null);
   const router = useRouter();
-  const [isWiping, setIsWiping] = useState(false);
+  const [targetRoute, setTargetRoute] = useState<string | null>(null);
   const [initWipe, setInitWipe] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   /* Track hero section leaving the viewport top */
   const { scrollYProgress } = useScroll({
@@ -113,13 +114,13 @@ export default function Page() {
             onAnimationComplete={() => setInitWipe(false)}
           />
         )}
-        {isWiping && (
+        {targetRoute && (
           <motion.div
             className="fixed inset-0 z-[9999] bg-[#fafafa] pointer-events-none"
             initial={{ clipPath: "polygon(0 0, 0 0, -50% 100%, -50% 100%)" }}
             animate={{ clipPath: "polygon(0 0, 150% 0, 100% 100%, -50% 100%)" }}
             transition={{ type: "spring", stiffness: 120, damping: 14, mass: 0.5 }}
-            onAnimationComplete={() => router.push("/v2")}
+            onAnimationComplete={() => router.push(targetRoute)}
           />
         )}
       </AnimatePresence>
@@ -143,11 +144,59 @@ export default function Page() {
             ))}
           </div>
           <div className="flex items-center gap-6">
-            {/* The glowing, magnetic element Toggle UI */}
-            <div onClick={() => setIsWiping(true)}>
-              <MagneticButton className="group flex items-center justify-center w-10 h-10 rounded-full border border-inverse-primary/50 text-inverse-primary hover:bg-inverse-primary hover:text-black transition-all shadow-[0_0_15px_rgba(18,74,240,0.4)] hover:shadow-[0_0_25px_rgba(18,74,240,0.8)] cursor-pointer">
-                <span className="material-symbols-outlined text-[18px] leading-none">contrast</span>
-              </MagneticButton>
+            {/* Theme Dropdown */}
+            <div 
+              className="relative" 
+              onMouseEnter={() => setIsDropdownOpen(true)}
+              onMouseLeave={() => setIsDropdownOpen(false)}
+            >
+              <div onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                <MagneticButton className="flex items-center justify-center h-10 px-4 rounded-full border border-inverse-primary/50 text-inverse-primary hover:bg-inverse-primary hover:text-black transition-all shadow-[0_0_15px_rgba(18,74,240,0.4)] hover:shadow-[0_0_25px_rgba(18,74,240,0.8)] cursor-pointer gap-2">
+                  <span className="material-symbols-outlined text-[18px] leading-none">contrast</span>
+                  <span className="text-sm font-bold uppercase tracking-widest hidden md:block">Theme</span>
+                  <span className={`material-symbols-outlined text-[18px] leading-none transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}>arrow_drop_down</span>
+                </MagneticButton>
+              </div>
+              
+              <AnimatePresence>
+                {isDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute right-0 top-full mt-2 w-48 bg-[#0e0e0e] border border-outline-variant/20 rounded-xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)] flex flex-col z-[100]"
+                  >
+                    <button
+                      onClick={() => setIsDropdownOpen(false)}
+                      className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-inverse-primary/20 hover:text-inverse-primary text-inverse-primary transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">dark_mode</span>
+                      <span className="text-sm font-bold tracking-widest uppercase truncate">Cinematic</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setIsDropdownOpen(false);
+                        setTargetRoute("/v2");
+                      }}
+                      className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-inverse-primary/20 hover:text-inverse-primary text-[#e2e2e2] transition-colors border-t border-outline-variant/10"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">light_mode</span>
+                      <span className="text-sm font-bold tracking-widest uppercase truncate">Minimalist</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setIsDropdownOpen(false);
+                        setTargetRoute("/v3");
+                      }}
+                      className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-inverse-primary/20 hover:text-inverse-primary text-[#e2e2e2] transition-colors border-t border-outline-variant/10"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">grid_view</span>
+                      <span className="text-sm font-bold tracking-widest uppercase truncate">Bento</span>
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <MagneticButton
