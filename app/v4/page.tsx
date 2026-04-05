@@ -586,9 +586,23 @@ function WheelArea() {
   const [result, setResult] = useState<WheelOption | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [showSaveSuccess, setShowSaveSuccess] = useState(false);
+  const [eliminationMode, setEliminationMode] = useState(false);
+  const [baseOptions, setBaseOptions] = useState<WheelOption[]>([
+    { id: "1", text: "Game 1", color: "#f43f5e" },
+    { id: "2", text: "Game 2", color: "#3b82f6" },
+    { id: "3", text: "Game 3", color: "#10b981" },
+    { id: "4", text: "Study", color: "#f59e0b" },
+    { id: "5", text: "Sleep", color: "#8b5cf6" },
+    { id: "6", text: "Anime", color: "#ec4899" },
+    { id: "7", text: "Code", color: "#06b6d4" }
+  ]);
+  const [pickedOptions, setPickedOptions] = useState<WheelOption[]>([]);
 
   useEffect(() => {
     try {
+      const savedElim = localStorage.getItem("devyaji_wheel_elimination");
+      if (savedElim) setEliminationMode(savedElim === "true");
+
       const saved = localStorage.getItem("devyaji_wheel_options");
       if (saved) {
         const parsed = JSON.parse(saved);
@@ -601,11 +615,14 @@ function WheelArea() {
               color: `hsl(${Math.round((i * 360) / Math.max(parsed.length, 1))}, 70%, 60%)`
             }));
             setOptions(migrated);
+            setBaseOptions(migrated);
           } else {
             setOptions(parsed);
+            setBaseOptions(parsed);
           }
         } else {
           setOptions([]);
+          setBaseOptions([]);
         }
       }
     } catch (e) {
@@ -615,20 +632,41 @@ function WheelArea() {
     }
   }, []);
 
+  const toggleEliminationMode = (val: boolean) => {
+    setEliminationMode(val);
+    localStorage.setItem("devyaji_wheel_elimination", val.toString());
+  };
+
   const saveOptions = () => {
-    localStorage.setItem("devyaji_wheel_options", JSON.stringify(options));
+    localStorage.setItem("devyaji_wheel_options", JSON.stringify(baseOptions));
     setShowSaveSuccess(true);
     setTimeout(() => setShowSaveSuccess(false), 2000);
+  };
+
+  const dismissResult = () => {
+    setResult(null);
+    if (eliminationMode && options.length <= 1) {
+      setOptions(baseOptions);
+      setPickedOptions([]);
+    }
+  };
+
+  const resetGame = () => {
+    setOptions(baseOptions);
+    setPickedOptions([]);
+    setResult(null);
   };
 
   const addOption = (e: React.FormEvent) => {
     e.preventDefault();
     if (newOption.trim()) {
-      setOptions([...options, {
+      const newOpt = {
         id: Math.random().toString(36).substring(7),
         text: newOption.trim(),
         color: newColor
-      }]);
+      };
+      setOptions([...options, newOpt]);
+      setBaseOptions([...baseOptions, newOpt]);
       setNewOption("");
       const randomColors = ["#f43f5e", "#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ec4899", "#06b6d4", "#eab308"];
       setNewColor(randomColors[Math.floor(Math.random() * randomColors.length)]);
@@ -638,10 +676,12 @@ function WheelArea() {
   const removeOption = (id: string) => {
     if (isSpinning) return;
     setOptions(options.filter(opt => opt.id !== id));
+    setBaseOptions(baseOptions.filter(opt => opt.id !== id));
   };
 
   const updateOptionColor = (id: string, color: string) => {
     setOptions(options.map(opt => opt.id === id ? { ...opt, color } : opt));
+    setBaseOptions(baseOptions.map(opt => opt.id === id ? { ...opt, color } : opt));
   };
 
   const spin = () => {
@@ -653,6 +693,7 @@ function WheelArea() {
     const extraSpins = Math.floor(5 + Math.random() * 5); // strictly 5 to 9 full spins
     const randomIndex = Math.floor(Math.random() * options.length);
     const sliceAngle = 360 / options.length;
+    const wonOption = options[randomIndex];
     
     const extraRotation = extraSpins * 360;
     const targetAngle = 360 - (randomIndex * sliceAngle) - (sliceAngle / 2);
@@ -671,7 +712,12 @@ function WheelArea() {
 
     setTimeout(() => {
       setIsSpinning(false);
-      setResult(options[randomIndex]);
+      setResult(wonOption);
+      setPickedOptions(prev => [wonOption, ...prev]);
+
+      if (eliminationMode) {
+        setOptions(prev => prev.filter(opt => opt.id !== wonOption.id));
+      }
     }, spinDuration);
   };
 
@@ -682,9 +728,9 @@ function WheelArea() {
   }).join(", ")})`;
 
   return (
-    <div className="flex flex-col md:flex-row gap-8 h-full overflow-y-auto pb-8 items-center justify-center p-4">
+    <div className="flex flex-wrap gap-6 h-full overflow-y-auto overflow-x-hidden pb-8 items-start justify-center p-4">
       {/* Wheel Section */}
-      <div className="flex flex-col items-center justify-center relative w-full md:w-1/2 max-w-sm">
+      <div className="flex flex-col items-center justify-center relative w-full flex-1 min-w-[260px] max-w-sm">
         {/* Pointer (Top instead of right looks more natural for users, so angle 0 is normally top in CSS, actually in conic-gradient 0 is top). 
             Wait, let's just place the pointer on the right, since 0deg in CSS rotate usually starts from top, but conic gradient starts from top. Let's place it at the top! */}
         <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 z-10 w-8 h-8 pointer-events-none drop-shadow-[0_0_8px_rgba(0,0,0,0.5)]">
@@ -722,7 +768,7 @@ function WheelArea() {
         <button 
           onClick={spin}
           disabled={isSpinning || options.length === 0}
-          className="mt-8 px-8 py-3 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-400 hover:to-pink-400 text-white font-bold rounded-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-105 active:scale-95"
+          className="mt-8 w-full max-w-xs px-8 py-3 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-400 hover:to-pink-400 text-white font-black uppercase tracking-wider rounded-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-105 active:scale-95"
         >
           {isSpinning ? "SPINNING..." : "SPIN THE WHEEL!"}
         </button>
@@ -733,47 +779,84 @@ function WheelArea() {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 whitespace-nowrap bg-zinc-900/90 backdrop-blur-md px-6 py-4 rounded-2xl border-2 shadow-2xl flex flex-col items-center"
+              onClick={dismissResult}
+              className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-zinc-900/90 backdrop-blur-md px-6 py-4 rounded-2xl border-2 shadow-2xl flex flex-col items-center cursor-pointer transition-transform hover:scale-105 ${
+                (result.text.toUpperCase() === "PALDO" || result.text.toUpperCase() === "BWAHAHA") ? "min-w-[320px] max-w-[90vw] p-6" : "whitespace-nowrap"
+              }`}
               style={{ borderColor: result.color }}
+              title="Click to dismiss"
             >
-              <span className="text-xs text-zinc-400 uppercase tracking-widest mb-1">Result</span>
-              <span className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
-                {result.text}
-              </span>
+              <div className="absolute -top-3 -right-3 w-7 h-7 bg-zinc-800 border-2 border-zinc-700 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 transition-colors shadow-lg z-10">
+                <span className="material-symbols-outlined text-[14px]">close</span>
+              </div>
+              
+              {(result.text.toUpperCase() === "PALDO" || result.text.toUpperCase() === "BWAHAHA") ? (
+                <div className="flex flex-col items-center w-full">
+                  <span className="text-xs text-yellow-400 uppercase tracking-widest mb-3 font-bold animate-pulse">
+                    {result.text.toUpperCase() === "BWAHAHA" ? "💀 BAWI NEXT LIFE 💀" : "🎉 Special Jackpot 🎉"}
+                  </span>
+                  <div className="w-full aspect-video rounded-xl overflow-hidden border border-yellow-500/50 shadow-[0_0_20px_rgba(234,179,8,0.3)] bg-black mb-3">
+                    <video 
+                      src={result.text.toUpperCase() === "BWAHAHA" ? "/video/BWAHAHA.mp4" : "/video/paldo.mp4"} 
+                      autoPlay 
+                      playsInline 
+                      className="w-full h-full object-cover"
+                      controls={false}
+                      loop
+                    />
+                  </div>
+                  <span className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-yellow-600 drop-shadow-md">
+                    {result.text.toUpperCase()}!
+                  </span>
+                </div>
+              ) : (
+                <>
+                  <span className="text-xs text-zinc-400 uppercase tracking-widest mb-1">Result</span>
+                  <span className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
+                    {result.text}
+                  </span>
+                </>
+              )}
+
+              {eliminationMode && options.length <= 1 && (
+                <div className="mt-4 text-[10px] font-bold text-pink-400 bg-pink-500/10 px-3 py-1 rounded-full animate-pulse border border-pink-500/20 uppercase tracking-wider">
+                   Click to Reset & Play Again
+                </div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
       {/* Options Section */}
-      <div className="w-full md:w-1/2 max-w-sm flex flex-col bg-black/20 p-6 rounded-2xl border border-white/10 h-full max-h-[400px]">
+      <div className="w-full flex-1 min-w-[260px] max-w-sm flex flex-col bg-black/20 p-5 rounded-2xl border border-white/10 h-full max-h-[450px]">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-bold text-white flex items-center gap-2">
-            <span className="material-symbols-outlined text-pink-400">tune</span>
+          <h3 className="text-lg font-bold text-white flex items-center gap-2 shrink-0">
+            <span className="material-symbols-outlined text-pink-400 leading-none">tune</span>
             Options
           </h3>
           <button 
             onClick={saveOptions}
-            className={`text-xs font-bold px-3 py-1.5 rounded-md flex items-center gap-1 transition-colors shadow-lg shadow-black/20 ${
+            className={`text-xs font-bold px-3 py-1.5 rounded-md flex items-center gap-1 transition-colors shadow-lg shadow-black/20 shrink-0 ${
               showSaveSuccess 
                 ? "bg-green-600/80 text-white" 
                 : "bg-blue-600/80 hover:bg-blue-500 text-white"
             }`}
           >
-            <span className="material-symbols-outlined text-[14px]">
+            <span className="material-symbols-outlined text-[14px] leading-none">
               {showSaveSuccess ? "check" : "save"}
             </span>
             {showSaveSuccess ? "Saved!" : "Save"}
           </button>
         </div>
         
-        <form onSubmit={addOption} className="flex gap-2 mb-4">
+        <form onSubmit={addOption} className="flex gap-2 mb-3">
           <div className="relative w-10 h-10 shrink-0 border border-white/10 rounded-lg overflow-hidden cursor-pointer flex items-center justify-center shadow-inner">
             <input 
               type="color"
               value={newColor}
               onChange={(e) => setNewColor(e.target.value)}
-              className="absolute -top-2 -left-2 w-14 h-14 cursor-pointer opacity-0 z-10"
+              className="absolute -top-4 -left-4 w-20 h-20 cursor-pointer opacity-0 z-10"
               title="Choose color"
             />
             <div className="absolute inset-0 pointer-events-none" style={{ backgroundColor: newColor }} />
@@ -783,13 +866,25 @@ function WheelArea() {
             value={newOption}
             onChange={(e) => setNewOption(e.target.value)}
             placeholder="Add new option..."
-            className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-pink-500 transition-colors"
+            className="flex-1 bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-pink-500 transition-colors placeholder:text-zinc-500"
             maxLength={15}
           />
           <button type="submit" className="bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-lg transition-colors flex items-center justify-center">
             <span className="material-symbols-outlined text-[18px]">add</span>
           </button>
         </form>
+
+        <div className="flex items-center justify-between px-2 mb-2 pb-3 border-b border-white/5 shrink-0">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400" title="When enabled, the winning option is removed after the spin">
+            Eliminator Mode
+          </span>
+          <label className="flex items-center cursor-pointer group">
+            <div className={`w-8 h-4 rounded-full relative transition-colors border ${eliminationMode ? 'bg-pink-500 border-pink-400' : 'bg-black/50 border-white/20'}`}>
+              <div className={`absolute top-[1px] bottom-[1px] w-3 rounded-full bg-white transition-all shadow-sm ${eliminationMode ? 'left-[17px]' : 'left-[1px]'}`} />
+            </div>
+            <input type="checkbox" checked={eliminationMode} onChange={(e) => toggleEliminationMode(e.target.checked)} className="hidden" />
+          </label>
+        </div>
 
         <div className="flex-1 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
           <AnimatePresence>
@@ -829,6 +924,49 @@ function WheelArea() {
           )}
         </div>
       </div>
+
+      {/* Picked History Section */}
+      <div className="w-full flex-1 min-w-[260px] max-w-sm flex flex-col bg-black/20 p-5 rounded-2xl border border-white/10 h-full max-h-[450px]">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-bold text-white flex items-center gap-2 shrink-0">
+            <span className="material-symbols-outlined text-green-400 leading-none">history</span>
+            History
+          </h3>
+          {pickedOptions.length > 0 && (
+            <button 
+              onClick={resetGame}
+              className="text-xs font-bold px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-white transition-colors flex items-center gap-1 shadow-lg border border-white/10 shrink-0"
+            >
+              <span className="material-symbols-outlined text-[14px] leading-none">refresh</span>
+              Reset
+            </button>
+          )}
+        </div>
+        <div className="flex-1 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
+          <AnimatePresence>
+            {pickedOptions.map((opt, i) => (
+              <motion.div 
+                key={opt.id + i}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="flex items-center gap-3 bg-white/5 border border-white/5 px-3 py-2 rounded-lg relative overflow-hidden"
+              >
+                <div className="absolute left-0 top-0 bottom-0 w-1 opacity-50" style={{ backgroundColor: opt.color }} />
+                <div className="w-3 h-3 rounded-full shadow-sm ml-1" style={{ backgroundColor: opt.color }} />
+                <span className="text-sm font-medium text-zinc-300 line-through opacity-70 decoration-pink-500/50 decoration-2">{opt.text}</span>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+          {pickedOptions.length === 0 && (
+            <div className="flex flex-col items-center justify-center h-full text-zinc-500 opacity-50 space-y-2 pb-8">
+               <span className="material-symbols-outlined text-4xl">sweep</span>
+               <p className="text-sm font-medium tracking-wide">No picks yet</p>
+            </div>
+          )}
+        </div>
+      </div>
+
     </div>
   );
 }
